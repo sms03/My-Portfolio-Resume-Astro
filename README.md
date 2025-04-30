@@ -19,8 +19,8 @@ My personal portfolio website built with Astro.js and Tailwind CSS, showcasing m
 - **Styling**: Tailwind CSS
 - **Content**: MDX for rich content with components
 - **Deployment**: Netlify or Vercel
-![Deploy to Netlify Button](https://www.netlify.com/)
-![Deploy to Vercel Button](https://www.vercel.com/)
+![Deploy to Netlify Button](https://app.netlify.com/teams/sms03/sites)
+(https://www.vercel.com/)
 
 ## Project Structure
 
