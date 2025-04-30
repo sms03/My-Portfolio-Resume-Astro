@@ -1,0 +1,46 @@
+---
+
+---
+
+<button
+    id="backToTop"
+    class="fixed bottom-6 right-6 z-50 p-3 rounded-lg bg-main text-main shadow-lg transition-transform duration-300 hover:scale-110 hover:bg-main/80 focus:outline-none"
+    aria-label="Back to top"
+    onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
+>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="feather feather-arrow-up"
+    >
+        <line x1="12" y1="19" x2="12" y2="5"></line>
+        <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+</button>
+<script>
+    // Hide button when at the top, show when scrolled down
+    window.addEventListener('scroll', () => {
+        const btn = document.getElementById('backToTop');
+        if (btn) {
+            if (window.scrollY > 200) {
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        }
+    });
+
+    // Set initial display state on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('backToTop');
+        if (btn) {
+            btn.style.display = window.scrollY > 200 ? 'block' : 'none';
+        }
+    });
+</script>
