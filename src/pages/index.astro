@@ -15,29 +15,29 @@ const featuredProjects = projects.filter(({ data }) => data.isFeatured);
     <Hero />
     {
         featuredProjects?.length > 0 && (
-            <div class="mb-16 sm:mb-24">
-                <h2 class="mb-12 text-xl font-serif italic sm:mb-16 sm:text-2xl">Featured Projects</h2>
+            <div class="mb-10 sm:mb-16">
+                <h2 class="mb-8 text-xl font-serif italic sm:mb-10 sm:text-2xl">Featured Projects</h2>
                 {featuredProjects.map((project) => (
-                    <ProjectPreview project={project} class="mb-10 sm:mb-12" headingLevel="h3" />
+                    <ProjectPreview project={project} class="mb-6 sm:mb-8" headingLevel="h3" />
                 ))}
-                <div class="mt-12 sm:mt-16">
+                <div class="mt-8 sm:mt-10">
                     <Button href="/projects">View All Projects</Button>
                 </div>
             </div>
         )
     }
-    <div class="mb-16 sm:mb-24">
-        <h2 class="mb-12 text-xl font-serif italic sm:mb-16 sm:text-2xl">Currently Working On</h2>
-        <div class="prose prose-slate dark:prose-invert">
-            <p class="mb-6">I am currently building AI Agents with Google's A2A with ADK and MCP servers.</p>
+    <div class="mb-10 sm:mb-16">
+        <h2 class="mb-8 text-xl font-serif italic sm:mb-10 sm:text-2xl">Currently Working On</h2>
+        <div class="prose prose-slate dark:prose-invert [&>p]:leading-relaxed [&>ul]:leading-relaxed">
+            <p class="mb-3">I am currently building AI Agents with Google's A2A with ADK and MCP servers.</p>
 
-            <p class="mb-6">Some of my recent projects include:</p>
-            <ul>
+            <p class="mb-3">Some of my recent projects include:</p>
+            <ul class="space-y-1">
                 <li><a href="https://ren3der.vercel.app/" target="_blank" rel="noopener">Ren3der</a> - An online 3D rendering platform</li>
                 <li><a href="https://github.com/sms03/SharkSenz" target="_blank" rel="noopener">SharkSenz</a> - An innovative AI-powered solution</li>
             </ul>
 
-            <div class="mt-12 sm:mt-16">
+            <div class="mt-8 sm:mt-10">
                 <Button href="/skills">View My Skills</Button>
             </div>
         </div>
