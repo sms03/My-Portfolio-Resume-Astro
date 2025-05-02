@@ -25,7 +25,7 @@ import { Image } from 'astro:assets';
   
   <div className="bg-muted rounded-lg overflow-hidden relative">
     <Image 
-      src="/about.jpeg" 
+      src="/about.jpg" 
       alt="Shivam M. Salunkhe" 
       width={400} 
       height={500}
@@ -42,7 +42,10 @@ import { Image } from 'astro:assets';
 
 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
   <div className="bg-muted p-6 rounded-lg flex flex-col items-center text-center">
-    <div className="w-16 h-16 bg-main text-main rounded-full flex items-center justify-center mb-4"></div>
+    <div className="w-16 h-16 bg-main text-main rounded-full flex items-center justify-center mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+    </div>
+    <h3 className="text-xl font-bold mb-2">Creative Vision</h3>
     <p>Seamlessly blending artistic vision with technical execution</p>
   </div>
   
@@ -53,94 +56,6 @@ import { Image } from 'astro:assets';
     <h3 className="text-xl font-bold mb-2">Collaboration</h3>
     <p>Working across disciplines to create impactful digital experiences</p>
   </div>
-</div>
-
-## Professional Work
-
-<div className="prose prose-slate dark:prose-invert mb-8">
-  <p>My professional journey spans multiple creative domains:</p>
-</div>
-
-<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-  <div>
-    <h3 className="text-xl font-bold border-b border-main pb-2 mb-4">3D Motion Graphics Design</h3>
-    <p className="mb-4">I've worked with international brands and agencies including:</p>
-    
-    <div className="space-y-3">
-      <div className="bg-muted p-4 rounded flex items-center">
-        <div className="w-2 h-2 rounded-full bg-main mr-3"></div>
-        <span>AlphaAltair Creative Agency NGEN Luxuries (India)</span>
-      </div>
-      <div className="bg-muted p-4 rounded flex items-center">
-        <div className="w-2 h-2 rounded-full bg-main mr-3"></div>
-        <span>Future House Music (Rotterdam)</span>
-      </div>
-      <div className="bg-muted p-4 rounded flex items-center">
-        <div className="w-2 h-2 rounded-full bg-main mr-3"></div>
-        <span>GoZone Skimboards (Poland)</span>
-      </div>
-      <div className="bg-muted p-4 rounded flex items-center">
-        <div className="w-2 h-2 rounded-full bg-main mr-3"></div>
-        <span>Rareattic (India)</span>
-      </div>
-    </div>
-  </div>
-  
-  <div>
-    <h3 className="text-xl font-bold border-b border-main pb-2 mb-4">3D Cover Design</h3>
-    <p className="mb-4">I've created visual assets for artists such as:</p>
-    
-    <div className="grid grid-cols-3 gap-4">
-      <div className="bg-muted p-4 rounded-lg flex flex-col items-center text-center">
-        <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mb-2">
-          <span className="font-bold">AW</span>
-        </div>
-        <h4 className="font-bold">Alan Walker</h4>
-      </div>
-      
-      <div className="bg-muted p-4 rounded-lg flex flex-col items-center text-center">
-        <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mb-2">
-          <span className="font-bold">MJ</span>
-        </div>
-        <h4 className="font-bold">Morgan J</h4>
-      </div>
-      
-      <div className="bg-muted p-4 rounded-lg flex flex-col items-center text-center">
-        <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mb-2">
-          <span className="font-bold">BC</span>
-        </div>
-        <h4 className="font-bold">BCMP</h4>
-      </div>
-    </div>
-  </div>
-</div>
-
-## Current Projects
-
-<div className="prose prose-slate dark:prose-invert mb-6">
-  <p>I'm currently building AI Agents with Google's A2A with ADK and MCP servers, exploring the possibilities of artificial intelligence in creative and practical applications. Some of my projects include:</p>
-</div>
-
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-  <a href="https://ren3der.vercel.app/" className="block group">
-    <div className="bg-muted p-6 rounded-lg h-full transition-all hover:bg-main hover:text-main">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-bold">Ren3der</h3>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-1"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-      </div>
-      <p>An online 3D rendering platform that makes professional-quality rendering accessible to everyone</p>
-    </div>
-  </a>
-  
-  <a href="https://github.com/sms03/SharkSenz" className="block group">
-    <div className="bg-muted p-6 rounded-lg h-full transition-all hover:bg-main hover:text-main">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-bold">SharkSenz</h3>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-1"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-      </div>
-      <p>An innovative AI-powered solution leveraging advanced algorithms for smart decision making</p>
-    </div>
-  </a>
 </div>
 
 ## Get in Touch

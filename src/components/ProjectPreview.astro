@@ -9,16 +9,54 @@ const { title, description } = project.data;
 const TitleTag = headingLevel;
 ---
 
-<a class:list={['flex justify-between items-start gap-8 group', className]} href={`/projects/${project.id}/`}>
+<a class:list={['flex justify-between items-start gap-8 group project-card', className]} href={`/projects/${project.id}/`}>
     <div class="grow">
-        <TitleTag
-            class="text-xl leading-tight font-serif font-medium group-hover:underline group-hover:decoration-dashed group-hover:underline-offset-4 group-hover:decoration-1 sm:text-2xl"
-        >
-            {title}
-        </TitleTag>
+        <div class="flex items-center gap-3">
+            <TitleTag
+                class="text-xl leading-tight font-serif font-medium group-hover:underline group-hover:decoration-dashed group-hover:underline-offset-4 group-hover:decoration-1 sm:text-2xl"
+            >
+                {title}
+            </TitleTag>
+            {/* Ongoing status badge removed because 'status' does not exist in project.data */}
+        </div>
         {description && <div class="mt-1 text-sm leading-normal">{description}</div>}
+        {/* GitHub link removed because githubLink does not exist in project.data */}
     </div>
     <div class="hidden font-serif italic opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:gap-1 sm:items-center sm:shrink-0">
         View Project <ArrowRight class="fill-current w-4 h-4" />
     </div>
 </a>
+
+<script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener('astro:page-load', () => {
+        // Animate project cards on scroll
+        const projectCards = document.querySelectorAll('.project-card');
+
+        projectCards.forEach((card, index) => {
+            gsap.set(card, {
+                opacity: 0,
+                y: 50
+            });
+
+            ScrollTrigger.create({
+                trigger: card,
+                start: 'top bottom-=100',
+                once: true,
+                onEnter: () => {
+                    gsap.to(card, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        ease: 'power3.out',
+                        delay: index * 0.1
+                    });
+                }
+            });
+        });
+    });
+</script>

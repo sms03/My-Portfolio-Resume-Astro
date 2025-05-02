@@ -5,12 +5,12 @@ const socialLinks = siteConfig.socialLinks || [];
 const navLinks = siteConfig.footerNavLinks || [];
 ---
 
-<footer class="w-full max-w-3xl mx-auto pt-12 pb-10 sm:pt-24 sm:pb-14">
+<footer class="w-full max-w-3xl mx-auto pt-12 pb-10 sm:pt-24 sm:pb-14 footer-animate">
     {
         navLinks.length > 0 && (
-            <div class="mb-4 flex flex-wrap gap-x-6 gap-y-1">
+            <div class="mb-4 flex flex-wrap gap-x-6 gap-y-1 footer-nav">
                 {navLinks.map((link) => (
-                    <a class="font-serif hover:underline hover:underline-offset-2" href={link.href}>
+                    <a class="font-serif hover:underline hover:underline-offset-2 footer-link" href={link.href}>
                         {link.text}
                     </a>
                 ))}
@@ -19,16 +19,16 @@ const navLinks = siteConfig.footerNavLinks || [];
     }
     <div
         class:list={[
-            'pt-6 flex flex-col gap-4 border-t border-dashed border-main',
+            'pt-6 flex flex-col gap-4 border-t border-dashed border-main footer-content',
             { 'sm:flex-row-reverse sm:justify-between sm:items-center': socialLinks.length > 0 }
         ]}
     >
         {
             socialLinks.length > 0 && (
-                <div class="flex flex-wrap gap-x-4 gap-y-1">
+                <div class="flex flex-wrap gap-x-4 gap-y-1 social-links">
                     {socialLinks.map((link) => (
                         <a
-                            class="inline-flex items-center justify-center text-sm hover:underline hover:underline-offset-2"
+                            class="inline-flex items-center justify-center text-sm hover:underline hover:underline-offset-2 social-link"
                             href={link.href}
                             target="_blank"
                             rel="noopener noreferer"
@@ -39,17 +39,130 @@ const navLinks = siteConfig.footerNavLinks || [];
                 </div>
             )
         }
-        <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-2 copyright">
             <p class="text-sm">
                 &copy; {new Date().getFullYear()}&nbsp;<a class="hover:underline hover:underline-offset-2" href="/">{siteConfig.title}</a>. All rights reserved.
             </p>
-            <div class="flex items-center ml-0 sm:ml-4 gap-2">
-                <span class="relative flex h-3 w-3">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                </span>
-                <span class="text-xs text-green-600 dark:text-green-400 font-medium">Online</span>
+            <div class="flex items-center ml-0 sm:ml-4 gap-2 status-indicator">
+                <div class="services-ping relative">
+                    <span class="relative flex h-3 w-3">
+                        <span class="ping-animation absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-0"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                </div>
+                <span class="text-xs text-green-600 dark:text-green-400 font-medium service-status"> Online</span>
             </div>
         </div>
     </div>
 </footer>
+
+<script>
+    import { gsap } from 'gsap';
+    import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener('astro:page-load', () => {
+        // Footer animations
+        const footer = document.querySelector('.footer-animate');
+        if (!footer) return;
+
+        const footerNav = footer.querySelector('.footer-nav');
+        const footerLinks = footer.querySelectorAll('.footer-link');
+        const footerContent = footer.querySelector('.footer-content');
+        const socialLinks = footer.querySelectorAll('.social-link');
+        const copyright = footer.querySelector('.copyright');
+        const statusIndicator = footer.querySelector('.status-indicator');
+
+        // Blinking ping animation for services
+        const setupServicesPing = () => {
+            const pingElement = footer.querySelector('.ping-animation');
+            if (!pingElement) return;
+
+            // Create blinking animation timeline
+            const pingTimeline = gsap.timeline({
+                repeat: -1,
+                repeatDelay: 0.8
+            });
+
+            pingTimeline
+                .to(pingElement, {
+                    scale: 1.5, // Reduced from 2.5 to 1.5 for smaller radius
+                    opacity: 0.75,
+                    duration: 0.6,
+                    ease: 'sine.out'
+                })
+                .to(pingElement, {
+                    scale: 1,
+                    opacity: 0,
+                    duration: 0.4,
+                    ease: 'sine.in'
+                });
+
+            // Randomize the blinking a bit for more realistic service monitoring
+            const serviceStatus = footer.querySelector('.service-status');
+            if (serviceStatus) {
+                setInterval(() => {
+                    const services = ['All services online', 'CDN responding', 'API available', 'Database connected', 'Storage operational'];
+                    const randomService = services[Math.floor(Math.random() * services.length)];
+                    serviceStatus.textContent = randomService;
+                }, 3000);
+            }
+        };
+
+        ScrollTrigger.create({
+            trigger: footer,
+            start: 'top bottom-=100',
+            once: true,
+            onEnter: () => {
+                // Animate the footer border
+                gsap.fromTo(footerContent, { width: 0, opacity: 0 }, { width: '100%', opacity: 1, duration: 0.8, ease: 'power2.out' });
+
+                // Stagger the footer navigation links
+                if (footerLinks.length > 0) {
+                    gsap.fromTo(
+                        footerLinks,
+                        { opacity: 0, y: 20 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            stagger: 0.1,
+                            ease: 'power2.out',
+                            delay: 0.3
+                        }
+                    );
+                }
+
+                // Stagger the social links
+                if (socialLinks.length > 0) {
+                    gsap.fromTo(
+                        socialLinks,
+                        { opacity: 0, y: 20 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            stagger: 0.1,
+                            ease: 'power2.out',
+                            delay: 0.5
+                        }
+                    );
+                }
+
+                // Animate the copyright and status
+                gsap.fromTo(
+                    [copyright, statusIndicator],
+                    { opacity: 0 },
+                    {
+                        opacity: 1,
+                        duration: 0.8,
+                        delay: 0.6,
+                        ease: 'power2.out',
+                        onComplete: setupServicesPing
+                    }
+                );
+            }
+        });
+    });
+</script>

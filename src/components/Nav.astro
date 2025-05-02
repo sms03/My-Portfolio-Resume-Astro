@@ -6,7 +6,7 @@ import siteConfig from '../data/site-config';
 const navLinks = siteConfig.headerNavLinks || [];
 ---
 
-<nav class="min-h-10 pt-4 pb-12 relative sm:min-h-14 sm:pb-24 md:pt-8">
+<nav class="min-h-10 pt-4 pb-12 relative sm:min-h-14 sm:pb-24 md:pt-8 nav-animate">
     {
         navLinks.length > 0 && (
             <div class="w-full max-w-3xl mx-auto relative">
@@ -22,8 +22,8 @@ const navLinks = siteConfig.headerNavLinks || [];
                     id="menu-items"
                     class="menu flex gap-6 max-md:flex-col max-md:gap-1 max-md:absolute max-md:-top-2.5 max-md:-left-2.5 max-md:max-w-64 max-md:px-3 max-md:pt-16 max-md:pb-10 max-md:z-20 max-md:bg-main max-md:border max-md:border-dashed max-md:border-main"
                 >
-                    {navLinks.map((link) => (
-                        <li class="py-1">
+                    {navLinks.map((link, index) => (
+                        <li class="py-1 nav-item" data-index={index}>
                             <NavLink
                                 class="text-xl font-serif text-main hover:underline hover:underline-offset-2 hover:decoration-1 md:text-base"
                                 href={link.href}
@@ -36,7 +36,7 @@ const navLinks = siteConfig.headerNavLinks || [];
             </div>
         )
     }
-    <div class="absolute right-0 top-4 z-10 md:top-8">
+    <div class="absolute right-0 top-4 z-10 md:top-8 theme-toggle-wrapper">
         <ThemeToggle />
     </div>
 </nav>
@@ -91,17 +91,76 @@ const navLinks = siteConfig.headerNavLinks || [];
 </style>
 
 <script>
+    import { gsap } from 'gsap';
+
     function menuToggle() {
         const menu = document.querySelector('.menu');
         const menuToggleBtn = document.querySelector('.menu-toggle');
+
         menuToggleBtn?.addEventListener('click', () => {
             const isMenuExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
             menuToggleBtn.classList.toggle('is-active');
             menuToggleBtn.setAttribute('aria-expanded', isMenuExpanded ? 'false' : 'true');
             menuToggleBtn.setAttribute('aria-label', isMenuExpanded ? 'Open Menu' : 'Close Menu');
-            menu?.classList.toggle('is-visible');
+
+            if (!isMenuExpanded) {
+                // Opening menu animation
+                menu?.classList.add('is-visible');
+
+                const menuItems = document.querySelectorAll('.nav-item');
+                gsap.fromTo(
+                    menuItems,
+                    { opacity: 0, x: -20 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: 0.4,
+                        stagger: 0.1,
+                        ease: 'power2.out',
+                        delay: 0.2
+                    }
+                );
+            } else {
+                // Closing menu animation
+                gsap.to(menu, {
+                    opacity: 0,
+                    duration: 0.3,
+                    onComplete: () => {
+                        menu?.classList.remove('is-visible');
+                        gsap.set(menu, { opacity: '' });
+                    }
+                });
+            }
         });
     }
-    menuToggle();
+
+    // Initialize animations
+    document.addEventListener('astro:page-load', () => {
+        menuToggle();
+
+        // Animate nav items on page load
+        const navItems = document.querySelectorAll('.nav-item');
+        const themeToggle = document.querySelector('.theme-toggle-wrapper');
+
+        gsap.set([navItems, themeToggle], { opacity: 0, y: -20 });
+
+        gsap.to(navItems, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: 'power2.out',
+            delay: 0.1
+        });
+
+        gsap.to(themeToggle, {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power2.out',
+            delay: 0.4
+        });
+    });
+
     document.addEventListener('astro:after-swap', menuToggle);
 </script>

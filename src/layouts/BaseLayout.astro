@@ -26,7 +26,7 @@ const { showHeader = true, ...head } = Astro.props;
         <div class="flex flex-col min-h-screen px-4 md:px-8">
             <Nav />
             {showHeader && <Header />}
-            <main class="grow w-full max-w-3xl mx-auto">
+            <main class="grow w-full max-w-3xl mx-auto content-wrapper">
                 <slot />
             </main>
             <BackToTop />
@@ -34,3 +34,27 @@ const { showHeader = true, ...head } = Astro.props;
         </div>
     </body>
 </html>
+
+<script>
+    import { initAnimations } from '../utils/animation-utils';
+
+    // Initialize animations when the page content is loaded
+    document.addEventListener('astro:page-load', () => {
+        // Add a small delay to ensure DOM is fully ready
+        setTimeout(() => {
+            initAnimations();
+        }, 100);
+    });
+</script>
+
+<style is:global>
+    /* Initial state for animated elements */
+    .content-wrapper {
+        opacity: 0;
+    }
+
+    /* Animation ready state */
+    body.animations-ready .content-wrapper {
+        opacity: 1;
+    }
+</style>

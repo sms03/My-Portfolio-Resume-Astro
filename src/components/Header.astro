@@ -2,17 +2,50 @@
 import siteConfig from '../data/site-config';
 ---
 
-<header class="w-full max-w-3xl mx-auto mb-12 sm:mb-16">
+<header class="w-full max-w-3xl mx-auto mb-12 sm:mb-16 header-animate">
     {
         siteConfig.logo && siteConfig.logo?.src ? (
-            <a href="/">
+            <a href="/" class="logo-animate">
                 <img src={siteConfig.logo.src} alt={siteConfig.logo.alt || ''} class="max-h-12" />
             </a>
         ) : (
-            <a class="font-serif text-2xl leading-tight font-medium italic text-theme-foreground sm:text-4xl" href="/">
+            <a class="font-serif text-2xl leading-tight font-medium italic text-theme-foreground sm:text-4xl title-animate" href="/">
                 {siteConfig.title}
             </a>
         )
     }
-    {siteConfig.subtitle && <p class="text-base leading-tight mt-2 sm:text-lg">{siteConfig.subtitle}</p>}
+    {siteConfig.subtitle && <p class="text-base leading-tight mt-2 sm:text-lg subtitle-animate">{siteConfig.subtitle}</p>}
 </header>
+
+<script>
+    import { gsap } from 'gsap';
+
+    document.addEventListener('astro:page-load', () => {
+        // Header animation
+        const header = document.querySelector('.header-animate');
+        if (header) {
+            const titleElement = header.querySelector('.title-animate');
+            const subtitleElement = header.querySelector('.subtitle-animate');
+            const logoElement = header.querySelector('.logo-animate');
+
+            const headerTl = gsap.timeline({
+                defaults: { duration: 0.8, ease: 'power2.out' }
+            });
+
+            if (logoElement) {
+                gsap.set(logoElement, { opacity: 0, y: -20 });
+                headerTl.to(logoElement, { opacity: 1, y: 0 });
+            }
+
+            if (titleElement) {
+                gsap.set(titleElement, { opacity: 0, y: -20 });
+                headerTl.to(titleElement, { opacity: 1, y: 0 }, '-=0.6');
+            }
+
+            if (subtitleElement) {
+                gsap.set(subtitleElement, { opacity: 0 });
+                headerTl.to(subtitleElement, { opacity: 1 }, '-=0.4');
+            }
+        }
+    });
+</script>
