@@ -1,0 +1,80 @@
+---
+// Gallery.astro component for displaying images in a grid with lightbox functionality
+const { images } = Astro.props;
+---
+
+<div class="gallery-grid">
+    <div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 sm:gap-6">
+        {
+            images.map((image) => (
+                <div class="gallery-item">
+                    <img
+                        src={image.src}
+                        alt={image.title}
+                        class="object-cover w-full aspect-square cursor-pointer rounded shadow transition-transform hover:scale-105"
+                    />
+                </div>
+            ))
+        }
+    </div>
+</div>
+
+<div id="lightbox" class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center">
+    <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[90vh] rounded-lg shadow-2xl" />
+    <button
+        id="close-lightbox"
+        class="absolute top-8 right-8 text-white text-3xl bg-black/50 w-12 h-12 rounded-full flex items-center justify-center hover:bg-red-600/80 transition"
+    >
+        &times;
+    </button>
+</div>
+
+<script>
+    // Initialize gallery lightbox functionality
+    document.addEventListener('DOMContentLoaded', () => {
+        const galleryItems = document.querySelectorAll('.gallery-item img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeLightbox = document.getElementById('close-lightbox');
+
+        galleryItems.forEach((item) => {
+            item.addEventListener('click', () => {
+                if (lightboxImg && item instanceof HTMLImageElement) {
+                    lightboxImg.src = item.src;
+                    lightboxImg.alt = item.alt;
+                }
+                if (lightbox) {
+                    lightbox.classList.remove('hidden');
+                    lightbox.classList.add('flex');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        if (lightbox) {
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightboxFunc();
+                }
+            });
+        }
+
+        if (closeLightbox) {
+            closeLightbox.addEventListener('click', closeLightboxFunc);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightboxFunc();
+            }
+        });
+
+        function closeLightboxFunc() {
+            if (lightbox) {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+            }
+            document.body.style.overflow = '';
+        }
+    });
+</script>
