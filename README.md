@@ -2,6 +2,11 @@
 
 My personal portfolio website built with Astro.js and Tailwind CSS, showcasing my work as a 3D Artist and AI/ Frontend Developer.
 
+## Live Demo
+
+[View Portfolio Website](https://smsx.netlify.app/) <!-- Update with your actual portfolio link when available -->
+
+
 ## Portfolio Features:
 
 - ✅ Responsive design with dark and light mode
