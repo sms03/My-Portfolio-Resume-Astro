@@ -1,16 +1,16 @@
-# Shivam M. Salunkhe - Portfolio
+# Portfolio Website
 
-My personal portfolio website built with Astro.js and Tailwind CSS, showcasing my work as a 3D Artist and AI/ Frontend Developer.
+A personal portfolio website built with Astro.js and Tailwind CSS, showcasing work as a 3D Artist and AI/Frontend Developer.
 
 ## Live Demo
 
-[View Portfolio Website](https://smsx.netlify.app/) <!-- Update with your actual portfolio link when available -->
-
+[View Portfolio Website](https://smsx.netlify.app/)
 
 ## Portfolio Features:
 
 - ✅ Responsive design with dark and light mode
-- ✅ Showcase of CGI and VFX projects
+- ✅ 3D artwork gallery with lightbox view
+- ✅ Showcase of projects and development work
 - ✅ Skills and expertise section
 - ✅ Education and professional background
 - ✅ Contact information and professional profiles
@@ -58,9 +58,9 @@ All commands are run from the root of the project, from a terminal:
 
 ## About Me
 
-I'm Shivam M. Salunkhe, a multidisciplinary professional working at the intersection of visual arts and technology. I combine my expertise in CGI and VFX artistry with skills in AI development, prompt engineering, and web application development to create innovative digital solutions.
+I'm a multidisciplinary professional working at the intersection of visual arts and technology. I combine expertise in CGI and VFX artistry with skills in AI development, prompt engineering, and web application development to create innovative digital solutions.
 
-With a background in both Interior Design and Computer Applications, I bring a unique perspective to projects that bridges aesthetics and functionality. I've worked with international brands including Future House Music (Rotterdam) and artists like Alan Walker.
+With a background in both Interior Design and Computer Applications, I bring a unique perspective to projects that bridges aesthetics and functionality. I've worked with international brands and artists.
 
 ## Connect With Me
 
@@ -70,4 +70,4 @@ With a background in both Interior Design and Computer Applications, I bring a u
 
 ---
 
-*This portfolio is based on the Dante Astro theme with customizations to showcase my personal work and skills. Thanks to https://github.com/JustGoodUI*
+*This portfolio is based on the Dante Astro theme with customizations to showcase personal work and skills. Thanks to https://github.com/JustGoodUI*
