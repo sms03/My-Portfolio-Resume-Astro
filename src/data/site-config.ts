@@ -90,7 +90,7 @@ const siteConfig: SiteConfig = {
         title: 'Welcome to My Portfolio 👋🏻',
         text: "Highly skilled **CGI and VFX Artist** with additional expertise as an **AI Developer**, **Prompt Engineer**, and **Web App Developer**. Adept at combining cutting-edge technology with creative artistry to produce innovative solutions in digital media, web applications, and AI-driven projects.\n\n" +
             "With a background in both **Interior Design** and **Computer Applications**, I bring a unique perspective to projects that bridges aesthetics and functionality. I've worked with international brands including **Future House Music** (Rotterdam) and artists like **Alan Walker**.\n\n" +
-            "Currently building AI Agents with Google's A2A with ADK and MCP servers, exploring the possibilities of artificial intelligence in creative applications. Check out my projects [Ren3der](https://ren3der.vercel.app/) and [SharkSenz](https://github.com/sms03/SharkSenz).",
+            "Currently building AI Agents with Google's A2A with ADK and MCP servers, exploring the possibilities of artificial intelligence in creative applications. Check out my projects [Ren3der](https://ren3der.vercel.app/) and [SharkSenz](https://sharksenz.vercel.app).",
         image: {
             src: '/gibli.png',
             alt: 'Shivam M. Salunkhe'
