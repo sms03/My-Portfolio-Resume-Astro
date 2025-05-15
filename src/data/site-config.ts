@@ -50,7 +50,7 @@ const siteConfig: SiteConfig = {
             href: '/projects'
         },
         {
-            text: '3D Work',
+            text: '3D Graphics',
             href: '/3d-work'
         },
         {
