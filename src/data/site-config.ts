@@ -60,6 +60,11 @@ const siteConfig: SiteConfig = {
         {
             text: 'Education',
             href: '/education'
+        },
+        {
+            text: 'Resume',
+            href: '/ResumeV5.pdf'
+            /* href: 'https://www.canva.com/design/DAGKby2KT6E/nPsY1XuytT56WUv4ZtA5bg/view?utm_content=DAGKby2KT6E&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h809e50f2d7' */
         }
     ],
     footerNavLinks: [

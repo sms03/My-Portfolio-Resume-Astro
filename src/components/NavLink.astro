@@ -6,9 +6,15 @@ type Props = HTMLAttributes<'a'>;
 const { href, class: className, ...props } = Astro.props;
 
 const { pathname } = Astro.url;
-const isActive = href === pathname || href === pathname.replace(/\/$/, '');
+const isExternal = typeof href === 'string' && (href.startsWith('http://') || href.startsWith('https://'));
+const isActive = typeof href === 'string' && !isExternal && (href === pathname || href === pathname.replace(/\/$/, ''));
 ---
 
-<a class:list={[className, { 'underline underline-offset-2 decoration-1': isActive }]} href={href} {...props}>
+<a 
+    class:list={[className, { 'underline underline-offset-2 decoration-1': isActive }]} 
+    href={href} 
+    {...props}
+    {...isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}}
+>
     <slot />
 </a>
