@@ -51,38 +51,6 @@ html {
     scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
-/* Cyan */
-/*
-:root {
-    --text-main: #162a2b;
-    --bg-main: #d6e0e2;
-    --bg-muted: #ccd8db;
-    --border-main: #162a2b;
-}
-html.dark {
-    --text-main: #d6e0e2;
-    --bg-main: #162a2b;
-    --bg-muted: #1c3537;
-    --border-main: #d6e0e2;
-}
-*/
-
-/* Green */
-/*
-:root {
-    --text-main: #3a4238;
-    --bg-main: #f3efe6;
-    --bg-muted: #eee9dc;
-    --border-main: #3a4238;
-}
-html.dark {
-    --text-main: #f3efe6;
-    --bg-main: #5e6c5b;
-    --bg-muted: #596756;
-    --border-main: #f3efe6;
-}
-*/
-
 @theme inline {
     --font-sans: 'Inter Variable', sans-serif;
     --font-serif: 'Newsreader Variable', serif;
@@ -90,6 +58,54 @@ html.dark {
     --background-color-main: var(--bg-main);
     --background-color-muted: var(--bg-muted);
     --border-color-main: var(--border-main);
+}
+
+/* Mobile-first responsive utilities */
+@layer base {
+    html {
+        @apply scroll-smooth;
+    }
+    
+    body {
+        @apply antialiased;
+        /* Prevent horizontal scroll on mobile */
+        overflow-x: hidden;
+    }
+    
+    /* Improve touch targets for mobile */
+    button, 
+    [role="button"], 
+    input[type="submit"], 
+    input[type="button"] {
+        @apply min-h-[44px] min-w-[44px];
+    }
+    
+    /* Better text rendering */
+    h1, h2, h3, h4, h5, h6 {
+        text-wrap: balance;
+    }
+    
+    p {
+        text-wrap: pretty;
+    }
+    
+    /* Performance optimizations */
+    img, picture, video, canvas, svg {
+        @apply block max-w-full h-auto;
+    }
+    
+    /* Improve font loading performance */
+    @font-display swap;
+    
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
 }
 
 @layer utilities {
@@ -125,5 +141,14 @@ html.dark {
 
     .prose blockquote {
         @apply font-serif font-normal italic border-none pl-0 text-[1.375em] leading-snug sm:text-[1.66667em];
+    }
+    
+    /* Utility classes for better performance */
+    .will-change-transform {
+        will-change: transform;
+    }
+    
+    .will-change-opacity {
+        will-change: opacity;
     }
 }
