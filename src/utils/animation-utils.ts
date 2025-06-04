@@ -4,61 +4,88 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
 
-// Page transition animations
-export const pageTransition = () => {
-    // Timeline for page exit
-    const exitTimeline = gsap.timeline({
-        defaults: { duration: 0.5, ease: 'power2.out' }
-    });
-
-    exitTimeline.to('.content-wrapper', {
-        opacity: 0,
-        y: 20,
-    });
-
-    return exitTimeline;
+// Common animation configurations
+const ANIMATION_CONFIG = {
+    duration: {
+        fast: 0.3,
+        normal: 0.6,
+        slow: 0.8
+    },
+    ease: {
+        default: 'power2.out',
+        smooth: 'power3.out'
+    },
+    stagger: 0.1
 };
 
-// Page enter animation
-export const pageEnter = () => {
-    const contentWrapper = document.querySelector('.content-wrapper');
-    const headerElements = gsap.utils.toArray('h1, h2, h3, .hero-image');
-    const paragraphs = gsap.utils.toArray('p, .button-wrapper, figure');
+// Unified fade in animation
+export const fadeInUp = (elements: string | Element | Element[], options = {}) => {
+    const config = {
+        duration: ANIMATION_CONFIG.duration.normal,
+        y: 30,
+        stagger: ANIMATION_CONFIG.stagger,
+        ease: ANIMATION_CONFIG.ease.default,
+        ...options
+    };
 
-    gsap.set([headerElements, paragraphs], { opacity: 0, y: 30 });
+    const targets = gsap.utils.toArray(elements);
+    gsap.set(targets, { opacity: 0, y: config.y });
 
-    const enterTimeline = gsap.timeline({
-        defaults: { duration: 0.6, ease: 'power2.out' }
+    return gsap.to(targets, {
+        opacity: 1,
+        y: 0,
+        duration: config.duration,
+        stagger: config.stagger,
+        ease: config.ease
     });
-
-    enterTimeline
-        .to(contentWrapper, { opacity: 1, duration: 0.3 })
-        .to(headerElements, { opacity: 1, y: 0, stagger: 0.1 }, '-=0.1')
-        .to(paragraphs, { opacity: 1, y: 0, stagger: 0.1 }, '-=0.3');
-
-    return enterTimeline;
 };
 
-// Project card animations
-export const animateProjectCards = () => {
-    const projects = gsap.utils.toArray('.project-card');
+// Scroll-triggered animations
+export const animateOnScroll = (selector: string, options = {}) => {
+    const elements = gsap.utils.toArray(selector);
 
-    projects.forEach(project => {
-        gsap.set(project, { opacity: 0, y: 50 });
+    elements.forEach((element: any) => {
+        gsap.set(element, { opacity: 0, y: 30 });
 
         ScrollTrigger.create({
-            trigger: project,
+            trigger: element,
             start: 'top bottom-=100',
             once: true,
-            onEnter: () => {
-                gsap.to(project, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.6,
-                    ease: 'power2.out'
-                });
-            }
+            onEnter: () => fadeInUp(element, options)
         });
+    });
+};
+
+// Navigation animations
+export const animateNavItems = (items: string | Element[], delay = 0) => {
+    return fadeInUp(items, {
+        y: -20,
+        delay,
+        duration: ANIMATION_CONFIG.duration.normal
+    });
+};
+
+// Mobile menu animation
+export const animateMobileMenu = (menuItems: string | Element[], isOpening = true) => {
+    if (isOpening) {
+        return gsap.fromTo(menuItems,
+            { opacity: 0, x: -20 },
+            {
+                opacity: 1,
+                x: 0,
+                duration: ANIMATION_CONFIG.duration.fast,
+                stagger: ANIMATION_CONFIG.stagger,
+                ease: ANIMATION_CONFIG.ease.default,
+                delay: 0.2
+            }
+        );
+    }
+
+    return gsap.to(menuItems, {
+        opacity: 0,
+        x: -20,
+        duration: ANIMATION_CONFIG.duration.fast,
+        stagger: ANIMATION_CONFIG.stagger / 2
     });
 };
 
@@ -73,7 +100,10 @@ export const animateHero = () => {
     const heroButtons = hero.querySelector('.flex.flex-wrap');
 
     const tl = gsap.timeline({
-        defaults: { duration: 0.8, ease: 'power3.out' }
+        defaults: {
+            duration: ANIMATION_CONFIG.duration.slow,
+            ease: ANIMATION_CONFIG.ease.smooth
+        }
     });
 
     tl.fromTo(heroTitle,
@@ -85,47 +115,22 @@ export const animateHero = () => {
             { opacity: 1, scale: 1 },
             '-=0.6'
         )
-        .fromTo(heroText,
+        .fromTo([heroText, heroButtons],
             { opacity: 0, y: 20 },
-            { opacity: 1, y: 0 },
-            '-=0.6'
-        )
-        .fromTo(heroButtons,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0 },
+            { opacity: 1, y: 0, stagger: 0.1 },
             '-=0.6'
         );
 
     return tl;
 };
 
-// Initialize animations
+// Initialize all animations
 export const initAnimations = () => {
-    // Add class to body when animations are complete
     document.body.classList.add('animations-ready');
 
     // Initialize hero animation
     animateHero();
 
-    // Initialize project card animations
-    animateProjectCards();
-
-    // Setup scroll animations
-    gsap.utils.toArray('.animate-on-scroll').forEach(element => {
-        gsap.set(element, { opacity: 0, y: 30 });
-
-        ScrollTrigger.create({
-            trigger: element,
-            start: 'top bottom-=100',
-            once: true,
-            onEnter: () => {
-                gsap.to(element, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: 'power2.out'
-                });
-            }
-        });
-    });
+    // Initialize scroll-triggered animations
+    animateOnScroll('.project-card, .animate-on-scroll');
 };
