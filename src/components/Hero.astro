@@ -29,27 +29,14 @@ const hero = siteConfig.hero;
 }
 
 <script>
-    import { gsap } from 'gsap';
+    import { fadeInUp } from '../utils/animation-utils';
 
     document.addEventListener('astro:page-load', () => {
         // Staggered animation for hero section elements
         const heroSection = document.querySelector('.hero-section');
         if (heroSection) {
-            const heroElements = heroSection.querySelectorAll('.animate-on-scroll');
-            
-            gsap.set(heroElements, { 
-                opacity: 0, 
-                y: 30 
-            });
-            
-            gsap.to(heroElements, {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.15,
-                ease: 'power2.out',
-                delay: 0.2
-            });
+            const heroElements = Array.from(heroSection.querySelectorAll('.animate-on-scroll'));
+            fadeInUp(heroElements, { duration: 0.8, stagger: 0.15, delay: 0.2 });
         }
     });
 </script>

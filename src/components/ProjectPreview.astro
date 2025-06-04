@@ -29,35 +29,14 @@ const TitleTag = headingLevel;
 </a>
 
 <script>
-    import { gsap } from 'gsap';
-    import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-    gsap.registerPlugin(ScrollTrigger);
+    import { animateOnScroll } from '../utils/animation-utils';
 
     document.addEventListener('astro:page-load', () => {
-        // Animate project cards on scroll
-        const projectCards = document.querySelectorAll('.project-card');
-
-        projectCards.forEach((card, index) => {
-            gsap.set(card, {
-                opacity: 0,
-                y: 50
-            });
-
-            ScrollTrigger.create({
-                trigger: card,
-                start: 'top bottom-=100',
-                once: true,
-                onEnter: () => {
-                    gsap.to(card, {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.6,
-                        ease: 'power3.out',
-                        delay: index * 0.1
-                    });
-                }
-            });
+        // Animate project cards on scroll using consolidated utility
+        animateOnScroll('.project-card', {
+            duration: 0.6,
+            ease: 'power3.out',
+            y: 50
         });
     });
 </script>

@@ -18,7 +18,7 @@ import siteConfig from '../data/site-config';
 </header>
 
 <script>
-    import { gsap } from 'gsap';
+    import { fadeInUp } from '../utils/animation-utils';
 
     document.addEventListener('astro:page-load', () => {
         // Header animation
@@ -28,23 +28,14 @@ import siteConfig from '../data/site-config';
             const subtitleElement = header.querySelector('.subtitle-animate');
             const logoElement = header.querySelector('.logo-animate');
 
-            const headerTl = gsap.timeline({
-                defaults: { duration: 0.8, ease: 'power2.out' }
-            });
+            const elements = [logoElement, titleElement, subtitleElement].filter(Boolean) as Element[];
 
-            if (logoElement) {
-                gsap.set(logoElement, { opacity: 0, y: -20 });
-                headerTl.to(logoElement, { opacity: 1, y: 0 });
-            }
-
-            if (titleElement) {
-                gsap.set(titleElement, { opacity: 0, y: -20 });
-                headerTl.to(titleElement, { opacity: 1, y: 0 }, '-=0.6');
-            }
-
-            if (subtitleElement) {
-                gsap.set(subtitleElement, { opacity: 0 });
-                headerTl.to(subtitleElement, { opacity: 1 }, '-=0.4');
+            if (elements.length > 0) {
+                fadeInUp(elements, {
+                    duration: 0.8,
+                    y: -20,
+                    stagger: 0.2
+                });
             }
         }
     });

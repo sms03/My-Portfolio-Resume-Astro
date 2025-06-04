@@ -50,6 +50,7 @@ const navLinks = siteConfig.footerNavLinks || [];
 <script>
     import { gsap } from 'gsap';
     import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import { fadeInUp } from '../utils/animation-utils';
 
     gsap.registerPlugin(ScrollTrigger);
 
@@ -58,13 +59,10 @@ const navLinks = siteConfig.footerNavLinks || [];
         const footer = document.querySelector('.footer-animate');
         if (!footer) return;
 
-        const footerNav = footer.querySelector('.footer-nav');
-        const footerLinks = footer.querySelectorAll('.footer-link');
         const footerContent = footer.querySelector('.footer-content');
-        const socialLinks = footer.querySelectorAll('.social-link');
+        const footerLinks = Array.from(footer.querySelectorAll('.footer-link'));
+        const socialLinks = Array.from(footer.querySelectorAll('.social-link'));
         const copyright = footer.querySelector('.copyright');
-
-        // Blinking ping animation for services - REMOVED
 
         ScrollTrigger.create({
             trigger: footer,
@@ -74,49 +72,18 @@ const navLinks = siteConfig.footerNavLinks || [];
                 // Animate the footer border
                 gsap.fromTo(footerContent, { width: 0, opacity: 0 }, { width: '100%', opacity: 1, duration: 0.8, ease: 'power2.out' });
 
-                // Stagger the footer navigation links
+                // Use consolidated animation functions
                 if (footerLinks.length > 0) {
-                    gsap.fromTo(
-                        footerLinks,
-                        { opacity: 0, y: 20 },
-                        {
-                            opacity: 1,
-                            y: 0,
-                            duration: 0.5,
-                            stagger: 0.1,
-                            ease: 'power2.out',
-                            delay: 0.3
-                        }
-                    );
+                    fadeInUp(footerLinks, { delay: 0.3 });
                 }
 
-                // Stagger the social links
                 if (socialLinks.length > 0) {
-                    gsap.fromTo(
-                        socialLinks,
-                        { opacity: 0, y: 20 },
-                        {
-                            opacity: 1,
-                            y: 0,
-                            duration: 0.5,
-                            stagger: 0.1,
-                            ease: 'power2.out',
-                            delay: 0.5
-                        }
-                    );
+                    fadeInUp(socialLinks, { delay: 0.5 });
                 }
 
-                // Animate the copyright
-                gsap.fromTo(
-                    copyright,
-                    { opacity: 0 },
-                    {
-                        opacity: 1,
-                        duration: 0.8,
-                        delay: 0.6,
-                        ease: 'power2.out'
-                    }
-                );
+                if (copyright) {
+                    fadeInUp(copyright, { delay: 0.6, y: 0 });
+                }
             }
         });
     });
