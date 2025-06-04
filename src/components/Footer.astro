@@ -43,15 +43,6 @@ const navLinks = siteConfig.footerNavLinks || [];
             <p class="text-sm">
                 &copy; {new Date().getFullYear()}&nbsp;<a class="hover:underline hover:underline-offset-2" href="/">{siteConfig.title}</a>. All rights reserved.
             </p>
-            <div class="flex items-center ml-0 sm:ml-4 gap-2 status-indicator">
-                <div class="services-ping relative">
-                    <span class="relative flex h-3 w-3">
-                        <span class="ping-animation absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-0"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
-                </div>
-                <span class="text-xs text-green-600 dark:text-green-400 font-medium service-status"> Online</span>
-            </div>
         </div>
     </div>
 </footer>
@@ -72,43 +63,8 @@ const navLinks = siteConfig.footerNavLinks || [];
         const footerContent = footer.querySelector('.footer-content');
         const socialLinks = footer.querySelectorAll('.social-link');
         const copyright = footer.querySelector('.copyright');
-        const statusIndicator = footer.querySelector('.status-indicator');
 
-        // Blinking ping animation for services
-        const setupServicesPing = () => {
-            const pingElement = footer.querySelector('.ping-animation');
-            if (!pingElement) return;
-
-            // Create blinking animation timeline
-            const pingTimeline = gsap.timeline({
-                repeat: -1,
-                repeatDelay: 0.8
-            });
-
-            pingTimeline
-                .to(pingElement, {
-                    scale: 1.5, // Reduced from 2.5 to 1.5 for smaller radius
-                    opacity: 0.75,
-                    duration: 0.6,
-                    ease: 'sine.out'
-                })
-                .to(pingElement, {
-                    scale: 1,
-                    opacity: 0,
-                    duration: 0.4,
-                    ease: 'sine.in'
-                });
-
-            // Randomize the blinking a bit for more realistic service monitoring
-            const serviceStatus = footer.querySelector('.service-status');
-            if (serviceStatus) {
-                setInterval(() => {
-                    const services = ['All services online', 'CDN responding', 'API available', 'Database connected', 'Storage operational'];
-                    const randomService = services[Math.floor(Math.random() * services.length)];
-                    serviceStatus.textContent = randomService;
-                }, 3000);
-            }
-        };
+        // Blinking ping animation for services - REMOVED
 
         ScrollTrigger.create({
             trigger: footer,
@@ -150,16 +106,15 @@ const navLinks = siteConfig.footerNavLinks || [];
                     );
                 }
 
-                // Animate the copyright and status
+                // Animate the copyright
                 gsap.fromTo(
-                    [copyright, statusIndicator],
+                    copyright,
                     { opacity: 0 },
                     {
                         opacity: 1,
                         duration: 0.8,
                         delay: 0.6,
-                        ease: 'power2.out',
-                        onComplete: setupServicesPing
+                        ease: 'power2.out'
                     }
                 );
             }
