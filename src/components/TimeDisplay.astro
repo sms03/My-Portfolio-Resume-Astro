@@ -1,0 +1,102 @@
+---
+// No props needed for this component
+---
+
+<div class="time-display text-sm font-mono tabular-nums">
+    <div class="time-wrapper">
+        <span id="current-time" class="block font-medium">--:--:-- --</span>
+        <span id="current-timezone" class="block text-[12px] opacity-70 mt-0.5">---</span>
+    </div>
+</div>
+
+<style>
+    .time-display {
+        @apply text-left select-none;
+    }
+
+    .time-wrapper {
+        @apply flex flex-col items-start;
+    }
+
+    #current-time {
+        @apply transition-colors duration-200;
+    }
+
+    #current-timezone {
+        @apply transition-opacity duration-200;
+    }
+    @media (max-width: 767px) {
+        .time-display {
+            @apply text-[12px];
+        }
+
+        #current-timezone {
+            @apply text-[10px];
+        }
+    }
+
+    /* Slight glow effect for the time */
+    .time-display:hover #current-time {
+        @apply opacity-80;
+    }
+</style>
+
+<script>
+    function updateTime() {
+        const timeElement = document.getElementById('current-time');
+        const timezoneElement = document.getElementById('current-timezone');
+
+        if (!timeElement || !timezoneElement) return;
+
+        const now = new Date();
+
+        // Format time with seconds
+        const timeString = now.toLocaleTimeString('en-US', {
+            hour12: true,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        // Get timezone information
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+        // Get timezone abbreviation (like EST, PST, etc.)
+        const formatter = new Intl.DateTimeFormat('en-US', {
+            timeZoneName: 'short'
+        });
+        const parts = formatter.formatToParts(now);
+        const timezoneName = parts.find((part) => part.type === 'timeZoneName')?.value || '';
+
+        // Get UTC offset
+        const offset = now.getTimezoneOffset();
+        const offsetHours = Math.floor(Math.abs(offset) / 60);
+        const offsetMinutes = Math.abs(offset) % 60;
+        const offsetSign = offset <= 0 ? '+' : '-';
+        const offsetString = `UTC${offsetSign}${offsetHours.toString().padStart(2, '0')}:${offsetMinutes.toString().padStart(2, '0')}`;
+
+        timeElement.textContent = timeString;
+        timezoneElement.textContent = `${timezoneName} (${offsetString})`;
+    }
+
+    function initTimeDisplay() {
+        // Update immediately
+        updateTime();
+
+        // Update every second
+        const interval = setInterval(updateTime, 1000);
+
+        // Cleanup on page navigation
+        const cleanup = () => {
+            clearInterval(interval);
+        };
+
+        document.addEventListener('astro:before-preparation', cleanup);
+
+        // Also cleanup when component might be removed
+        return cleanup;
+    }
+
+    // Initialize when page loads
+    document.addEventListener('astro:page-load', initTimeDisplay);
+</script>

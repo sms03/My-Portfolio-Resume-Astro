@@ -1,12 +1,18 @@
 ---
 import NavLink from './NavLink.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import TimeDisplay from './TimeDisplay.astro';
 import siteConfig from '../data/site-config';
 
 const navLinks = siteConfig.headerNavLinks || [];
 ---
 
 <nav class="min-h-10 pt-4 pb-12 relative sm:min-h-14 sm:pb-24 md:pt-8 nav-animate">
+    <!-- Time Display - Top Left (Hidden on Mobile) -->
+    <div class="absolute left-0 top-4 z-10 md:top-8 hidden md:block">
+        <TimeDisplay />
+    </div>
+
     {
         navLinks.length > 0 && (
             <div class="w-full max-w-3xl mx-auto relative">
@@ -36,6 +42,7 @@ const navLinks = siteConfig.headerNavLinks || [];
             </div>
         )
     }
+    <!-- Theme Toggle - Top Right -->
     <div class="absolute right-0 top-4 z-10 md:top-8 theme-toggle-wrapper">
         <ThemeToggle />
     </div>
@@ -128,9 +135,17 @@ const navLinks = siteConfig.headerNavLinks || [];
 
         // Animate nav items on page load
         const navItems = Array.from(document.querySelectorAll('.nav-item'));
+        const timeDisplay = document.querySelector('.time-display');
         const themeToggle = document.querySelector('.theme-toggle-wrapper');
 
         animateNavItems(navItems, 0.1);
+
+        // Animate time display (only visible on desktop)
+        if (timeDisplay) {
+            animateNavItems([timeDisplay], 0.3);
+        }
+
+        // Animate theme toggle
         if (themeToggle) {
             animateNavItems([themeToggle], 0.4);
         }
