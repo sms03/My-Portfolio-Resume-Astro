@@ -1,6 +1,16 @@
 ---
 // Gallery.astro component for displaying images in a grid with lightbox functionality
-const { images } = Astro.props;
+
+interface Image {
+    src: string;
+    title: string;
+}
+
+interface Props {
+    images: Image[];
+}
+
+const { images }: Props = Astro.props;
 ---
 
 <div class="gallery-grid">
@@ -40,8 +50,8 @@ const { images } = Astro.props;
         galleryItems.forEach((item) => {
             item.addEventListener('click', () => {
                 if (lightboxImg && item instanceof HTMLImageElement) {
-                    lightboxImg.src = item.src;
-                    lightboxImg.alt = item.alt;
+                    (lightboxImg as HTMLImageElement).src = item.src;
+                    (lightboxImg as HTMLImageElement).alt = item.alt;
                 }
                 if (lightbox) {
                     lightbox.classList.remove('hidden');
