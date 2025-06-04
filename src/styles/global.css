@@ -14,6 +14,15 @@
     --border-main: #171717;
     --scrollbar-thumb:rgb(50, 50, 50); /* Gray-400 for light mode */
     --scrollbar-track: rgba(243, 244, 246, 0.5); /* Gray-100 with transparency for light mode */
+    
+    /* Paper texture and glass effect variables for light mode */
+    --paper-texture-opacity: 0.08;
+    --paper-noise-opacity: 0.075;
+    --grid-opacity: 0.03;
+    --grid-major-opacity: 0.05;
+    --glass-blur: 10px;
+    --glass-opacity: 0.85;
+    --texture-scale: 1;
 }
 html.dark {
     --text-main: #f2f1ec;
@@ -22,6 +31,15 @@ html.dark {
     --border-main: #f2f1ec;
     --scrollbar-thumb:rgb(233, 233, 233); /* Gray-600 for dark mode */
     --scrollbar-track: rgba(31, 41, 55, 0.5); /* Gray-800 with transparency for dark mode */
+    
+    /* Enhanced values for dark mode */
+    --paper-texture-opacity: 0.03;
+    --paper-noise-opacity: 0.025;
+    --grid-opacity: 0.04;
+    --grid-major-opacity: 0.06;
+    --glass-blur: 12px;
+    --glass-opacity: 0.9;
+    --texture-scale: 1.1;
 }
 
 /* Custom Scrollbar Styles */
@@ -70,6 +88,9 @@ html {
         @apply antialiased;
         /* Prevent horizontal scroll on mobile */
         overflow-x: hidden;
+        /* Ensure smooth rendering with texture */
+        backface-visibility: hidden;
+        transform: translateZ(0);
     }
     
     /* Improve touch targets for mobile */
@@ -143,6 +164,107 @@ html {
         @apply font-serif font-normal italic border-none pl-0 text-[1.375em] leading-snug sm:text-[1.66667em];
     }
     
+    /* Enhanced paper texture and frosted glass background effects */
+    .paper-texture-bg {
+        position: relative;
+        background: var(--bg-main);
+    }
+    
+    .paper-texture-bg::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -2;
+        pointer-events: none;
+        background-image: 
+            /* Fine paper grain */
+            radial-gradient(circle at 25% 25%, transparent 20%, rgba(0,0,0,var(--paper-noise-opacity)) 21%, rgba(0,0,0,var(--paper-noise-opacity)) 22%, transparent 23%),
+            radial-gradient(circle at 75% 75%, transparent 20%, rgba(0,0,0,var(--paper-noise-opacity)) 21%, rgba(0,0,0,var(--paper-noise-opacity)) 22%, transparent 23%),
+            /* Paper fibers pattern */
+            linear-gradient(45deg, transparent 46%, rgba(0,0,0,var(--paper-texture-opacity)) 47%, rgba(0,0,0,var(--paper-texture-opacity)) 48%, transparent 49%),
+            linear-gradient(-45deg, transparent 46%, rgba(0,0,0,var(--paper-texture-opacity)) 47%, rgba(0,0,0,var(--paper-texture-opacity)) 48%, transparent 49%),
+            /* Subtle texture overlay */
+            radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(0,0,0,var(--paper-texture-opacity)) 61%, rgba(0,0,0,var(--paper-texture-opacity)) 62%, transparent 63%);
+        background-size: 
+            calc(15px * var(--texture-scale)) calc(15px * var(--texture-scale)),
+            calc(20px * var(--texture-scale)) calc(20px * var(--texture-scale)),
+            calc(80px * var(--texture-scale)) calc(80px * var(--texture-scale)),
+            calc(85px * var(--texture-scale)) calc(85px * var(--texture-scale)),
+            calc(120px * var(--texture-scale)) calc(120px * var(--texture-scale));
+        background-position: 
+            0 0,
+            10px 10px,
+            0 0,
+            40px 40px,
+            60px 60px;
+        opacity: 0.7;
+        animation: paperTextureDrift 60s linear infinite;
+    }
+    
+    @keyframes paperTextureDrift {
+        0% { transform: translate(0, 0); }
+        25% { transform: translate(-1px, 1px); }
+        50% { transform: translate(1px, 0); }
+        75% { transform: translate(0, -1px); }
+        100% { transform: translate(0, 0); }
+    }
+    
+    .frosted-glass-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+        pointer-events: none;
+        backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+        -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.1);
+        background: 
+            /* Major grid lines */
+            linear-gradient(90deg, 
+                transparent calc(40px - 1px), 
+                rgba(255,255,255,var(--grid-major-opacity)) 40px, 
+                rgba(255,255,255,var(--grid-major-opacity)) calc(40px + 1px), 
+                transparent calc(40px + 2px)
+            ),
+            linear-gradient(0deg, 
+                transparent calc(40px - 1px), 
+                rgba(255,255,255,var(--grid-major-opacity)) 40px, 
+                rgba(255,255,255,var(--grid-major-opacity)) calc(40px + 1px), 
+                transparent calc(40px + 2px)
+            ),
+            /* Minor grid lines */
+            linear-gradient(90deg, rgba(255,255,255,var(--grid-opacity)) 1px, transparent 1px),
+            linear-gradient(0deg, rgba(255,255,255,var(--grid-opacity)) 1px, transparent 1px),
+            /* Base background with slight tint */
+            linear-gradient(135deg, 
+                var(--bg-main) 0%, 
+                color-mix(in srgb, var(--bg-main) 95%, transparent) 50%, 
+                var(--bg-main) 100%
+            );
+        background-size: 200px 200px, 200px 200px, 20px 20px, 20px 20px, 100% 100%;
+        opacity: var(--glass-opacity);
+    }
+    
+    /* Dark mode adjustments for textures */
+    html.dark .paper-texture-bg::before {
+        background-image: 
+            radial-gradient(circle at 20% 50%, transparent 20%, rgba(255,255,255,var(--paper-texture-opacity)) 21%, rgba(255,255,255,var(--paper-texture-opacity)) 34%, transparent 35%, transparent),
+            linear-gradient(0deg, transparent 24%, rgba(255,255,255,var(--paper-texture-opacity)) 25%, rgba(255,255,255,var(--paper-texture-opacity)) 26%, transparent 27%, transparent 74%, rgba(255,255,255,var(--paper-texture-opacity)) 75%, rgba(255,255,255,var(--paper-texture-opacity)) 76%, transparent 77%, transparent),
+            linear-gradient(90deg, transparent 24%, rgba(255,255,255,var(--paper-texture-opacity)) 25%, rgba(255,255,255,var(--paper-texture-opacity)) 26%, transparent 27%, transparent 74%, rgba(255,255,255,var(--paper-texture-opacity)) 75%, rgba(255,255,255,var(--paper-texture-opacity)) 76%, transparent 77%, transparent);
+    }
+    
+    html.dark .frosted-glass-grid {
+        background: 
+            linear-gradient(90deg, rgba(255,255,255,var(--grid-opacity)) 1px, transparent 1px),
+            linear-gradient(rgba(255,255,255,var(--grid-opacity)) 1px, transparent 1px),
+            var(--bg-main);
+        background-size: 40px 40px;
+    }
+    
     /* Utility classes for better performance */
     .will-change-transform {
         will-change: transform;
@@ -150,5 +272,34 @@ html {
     
     .will-change-opacity {
         will-change: opacity;
+    }
+    
+    /* Z-index utilities for proper layering */
+    .relative {
+        position: relative;
+    }
+    
+    .z-10 {
+        z-index: 10;
+    }
+    
+    .z-negative-1 {
+        z-index: -1;
+    }
+    
+    .z-negative-2 {
+        z-index: -2;
+    }
+    
+    /* Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+        .frosted-glass-grid {
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        
+        .paper-texture-bg::before {
+            opacity: 0.3;
+        }
     }
 }
