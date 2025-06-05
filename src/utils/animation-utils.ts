@@ -82,7 +82,7 @@ export const animateMobileMenu = (menuItems: string | Element[], isOpening = tru
                         onComplete: () => resolve()
                     }
                 );
-                
+
                 // Fallback timeout
                 setTimeout(() => resolve(), 1000);
             } else {
@@ -93,7 +93,7 @@ export const animateMobileMenu = (menuItems: string | Element[], isOpening = tru
                     stagger: ANIMATION_CONFIG.stagger / 2,
                     onComplete: () => resolve()
                 });
-                
+
                 // Fallback timeout
                 setTimeout(() => resolve(), 500);
             }

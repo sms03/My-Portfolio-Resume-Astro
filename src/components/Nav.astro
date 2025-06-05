@@ -61,14 +61,14 @@ const navLinks = siteConfig.headerNavLinks || [];
             @apply visible opacity-100;
             transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
         }
-        
+
         .menu-toggle {
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
             position: relative;
             z-index: 31;
         }
-        
+
         .menu-toggle-icon {
             transition: width 0.1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
             transform: translateZ(0); /* Force hardware acceleration */
@@ -135,10 +135,10 @@ const navLinks = siteConfig.headerNavLinks || [];
 
     function handleMenuClick() {
         if (isAnimating || !menuToggleBtn || !menu) return;
-        
+
         isAnimating = true;
         const isMenuExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
-        
+
         menuToggleBtn.classList.toggle('is-active');
         menuToggleBtn.setAttribute('aria-expanded', isMenuExpanded ? 'false' : 'true');
         menuToggleBtn.setAttribute('aria-label', isMenuExpanded ? 'Open Menu' : 'Close Menu');
@@ -147,21 +147,25 @@ const navLinks = siteConfig.headerNavLinks || [];
             // Opening menu
             menu.classList.add('is-visible');
             const menuItems = Array.from(document.querySelectorAll('.nav-item'));
-            animateMobileMenu(menuItems, true).then(() => {
-                isAnimating = false;
-            }).catch(() => {
-                isAnimating = false;
-            });
+            animateMobileMenu(menuItems, true)
+                .then(() => {
+                    isAnimating = false;
+                })
+                .catch(() => {
+                    isAnimating = false;
+                });
         } else {
             // Closing menu
             const menuItems = Array.from(document.querySelectorAll('.nav-item'));
-            animateMobileMenu(menuItems, false).then(() => {
-                menu?.classList.remove('is-visible');
-                isAnimating = false;
-            }).catch(() => {
-                menu?.classList.remove('is-visible');
-                isAnimating = false;
-            });
+            animateMobileMenu(menuItems, false)
+                .then(() => {
+                    menu?.classList.remove('is-visible');
+                    isAnimating = false;
+                })
+                .catch(() => {
+                    menu?.classList.remove('is-visible');
+                    isAnimating = false;
+                });
         }
     }
 
@@ -169,7 +173,7 @@ const navLinks = siteConfig.headerNavLinks || [];
     function handleOutsideClick(event: Event) {
         const target = event.target as HTMLElement;
         if (!menu?.classList.contains('is-visible')) return;
-        
+
         if (!menu.contains(target) && !menuToggleBtn?.contains(target)) {
             if (menuToggleBtn && !isAnimating) {
                 handleMenuClick();
