@@ -50,12 +50,16 @@ const siteConfig: SiteConfig = {
             href: '/projects'
         },
         {
-            text: '3D Graphics',
-            href: '/3d-work'
+            text: 'Experience',
+            href: '/experience'
         },
         {
             text: 'Skills',
             href: '/skills'
+        },
+        {
+            text: '3D Graphics',
+            href: '/3d-work'
         },
         {
             text: 'Education',
@@ -83,12 +87,12 @@ const siteConfig: SiteConfig = {
             href: 'https://www.behance.net/SMSXART'
         },
         {
-            text: 'GitHub',
-            href: 'https://github.com/sms03'
-        },
-        {
             text: 'Email',
             href: 'mailto:shivamsal2000@gmail.com'
+        },
+        {
+            text: 'GitHub',
+            href: 'https://github.com/sms03'
         }
     ],
     hero: {
