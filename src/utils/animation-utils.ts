@@ -66,26 +66,41 @@ export const animateNavItems = (items: string | Element[], delay = 0) => {
 };
 
 // Mobile menu animation
-export const animateMobileMenu = (menuItems: string | Element[], isOpening = true) => {
-    if (isOpening) {
-        return gsap.fromTo(menuItems,
-            { opacity: 0, x: -20 },
-            {
-                opacity: 1,
-                x: 0,
-                duration: ANIMATION_CONFIG.duration.fast,
-                stagger: ANIMATION_CONFIG.stagger,
-                ease: ANIMATION_CONFIG.ease.default,
-                delay: 0.2
+export const animateMobileMenu = (menuItems: string | Element[], isOpening = true): Promise<void> => {
+    return new Promise((resolve, reject) => {
+        try {
+            if (isOpening) {
+                const animation = gsap.fromTo(menuItems,
+                    { opacity: 0, x: -20 },
+                    {
+                        opacity: 1,
+                        x: 0,
+                        duration: ANIMATION_CONFIG.duration.fast,
+                        stagger: ANIMATION_CONFIG.stagger,
+                        ease: ANIMATION_CONFIG.ease.default,
+                        delay: 0.2,
+                        onComplete: () => resolve()
+                    }
+                );
+                
+                // Fallback timeout
+                setTimeout(() => resolve(), 1000);
+            } else {
+                const animation = gsap.to(menuItems, {
+                    opacity: 0,
+                    x: -20,
+                    duration: ANIMATION_CONFIG.duration.fast,
+                    stagger: ANIMATION_CONFIG.stagger / 2,
+                    onComplete: () => resolve()
+                });
+                
+                // Fallback timeout
+                setTimeout(() => resolve(), 500);
             }
-        );
-    }
-
-    return gsap.to(menuItems, {
-        opacity: 0,
-        x: -20,
-        duration: ANIMATION_CONFIG.duration.fast,
-        stagger: ANIMATION_CONFIG.stagger / 2
+        } catch (error) {
+            console.warn('Animation error:', error);
+            resolve(); // Resolve anyway to prevent hanging
+        }
     });
 };
 

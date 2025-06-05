@@ -55,13 +55,23 @@ const navLinks = siteConfig.headerNavLinks || [];
         .menu {
             @apply invisible opacity-0;
             width: calc(100% + 1.25rem);
+            transform: translateZ(0); /* Force hardware acceleration */
         }
         .menu.is-visible {
             @apply visible opacity-100;
             transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
         }
+        
+        .menu-toggle {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 31;
+        }
+        
         .menu-toggle-icon {
             transition: width 0.1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+            transform: translateZ(0); /* Force hardware acceleration */
         }
         .menu-toggle.is-active .menu-toggle-icon {
             @apply w-0;
@@ -71,6 +81,7 @@ const navLinks = siteConfig.headerNavLinks || [];
         .menu-toggle-icon:after {
             @apply w-6 h-px absolute left-1/2 top-0 origin-center -translate-x-1/2 bg-current;
             content: '';
+            transform: translateZ(0); /* Force hardware acceleration */
             transition:
                 rotate 0.2s cubic-bezier(0.4, 0, 0.2, 1),
                 margin 0.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
@@ -104,34 +115,84 @@ const navLinks = siteConfig.headerNavLinks || [];
 <script>
     import { animateMobileMenu, animateNavItems } from '../utils/animation-utils';
 
+    let menuToggleBtn: HTMLElement | null = null;
+    let menu: HTMLElement | null = null;
+    let isAnimating = false;
+
     function menuToggle() {
-        const menu = document.querySelector('.menu');
-        const menuToggleBtn = document.querySelector('.menu-toggle');
+        // Clean up existing event listeners
+        if (menuToggleBtn) {
+            menuToggleBtn.removeEventListener('click', handleMenuClick);
+        }
 
-        menuToggleBtn?.addEventListener('click', () => {
-            const isMenuExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
-            menuToggleBtn.classList.toggle('is-active');
-            menuToggleBtn.setAttribute('aria-expanded', isMenuExpanded ? 'false' : 'true');
-            menuToggleBtn.setAttribute('aria-label', isMenuExpanded ? 'Open Menu' : 'Close Menu');
+        menu = document.querySelector('.menu');
+        menuToggleBtn = document.querySelector('.menu-toggle');
 
-            if (!isMenuExpanded) {
-                // Opening menu animation
-                menu?.classList.add('is-visible');
-                const menuItems = Array.from(document.querySelectorAll('.nav-item'));
-                animateMobileMenu(menuItems, true);
-            } else {
-                // Closing menu animation
-                const menuItems = Array.from(document.querySelectorAll('.nav-item'));
-                animateMobileMenu(menuItems, false).then(() => {
-                    menu?.classList.remove('is-visible');
-                });
+        if (!menuToggleBtn || !menu) return;
+
+        menuToggleBtn.addEventListener('click', handleMenuClick);
+    }
+
+    function handleMenuClick() {
+        if (isAnimating || !menuToggleBtn || !menu) return;
+        
+        isAnimating = true;
+        const isMenuExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
+        
+        menuToggleBtn.classList.toggle('is-active');
+        menuToggleBtn.setAttribute('aria-expanded', isMenuExpanded ? 'false' : 'true');
+        menuToggleBtn.setAttribute('aria-label', isMenuExpanded ? 'Open Menu' : 'Close Menu');
+
+        if (!isMenuExpanded) {
+            // Opening menu
+            menu.classList.add('is-visible');
+            const menuItems = Array.from(document.querySelectorAll('.nav-item'));
+            animateMobileMenu(menuItems, true).then(() => {
+                isAnimating = false;
+            }).catch(() => {
+                isAnimating = false;
+            });
+        } else {
+            // Closing menu
+            const menuItems = Array.from(document.querySelectorAll('.nav-item'));
+            animateMobileMenu(menuItems, false).then(() => {
+                menu?.classList.remove('is-visible');
+                isAnimating = false;
+            }).catch(() => {
+                menu?.classList.remove('is-visible');
+                isAnimating = false;
+            });
+        }
+    }
+
+    // Close menu when clicking outside
+    function handleOutsideClick(event: Event) {
+        const target = event.target as HTMLElement;
+        if (!menu?.classList.contains('is-visible')) return;
+        
+        if (!menu.contains(target) && !menuToggleBtn?.contains(target)) {
+            if (menuToggleBtn && !isAnimating) {
+                handleMenuClick();
             }
-        });
+        }
+    }
+
+    // Close menu on escape key
+    function handleEscape(event: KeyboardEvent) {
+        if (event.key === 'Escape' && menu?.classList.contains('is-visible')) {
+            if (menuToggleBtn && !isAnimating) {
+                handleMenuClick();
+            }
+        }
     }
 
     // Initialize animations
-    document.addEventListener('astro:page-load', () => {
+    function initializeNav() {
         menuToggle();
+
+        // Add global event listeners
+        document.addEventListener('click', handleOutsideClick);
+        document.addEventListener('keydown', handleEscape);
 
         // Animate nav items on page load
         const navItems = Array.from(document.querySelectorAll('.nav-item'));
@@ -149,7 +210,20 @@ const navLinks = siteConfig.headerNavLinks || [];
         if (themeToggle) {
             animateNavItems([themeToggle], 0.4);
         }
-    });
+    }
 
-    document.addEventListener('astro:after-swap', menuToggle);
+    // Cleanup function
+    function cleanupNav() {
+        if (menuToggleBtn) {
+            menuToggleBtn.removeEventListener('click', handleMenuClick);
+        }
+        document.removeEventListener('click', handleOutsideClick);
+        document.removeEventListener('keydown', handleEscape);
+        isAnimating = false;
+    }
+
+    // Page load events
+    document.addEventListener('astro:page-load', initializeNav);
+    document.addEventListener('astro:before-swap', cleanupNav);
+    document.addEventListener('astro:after-swap', initializeNav);
 </script>
