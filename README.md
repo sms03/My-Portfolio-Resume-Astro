@@ -6,7 +6,7 @@
 
 A modern, fast, and responsive portfolio-resume website built with Astro. Perfect for developers, designers, and professionals looking to showcase their work and experience in a clean, elegant interface.
 
-![Portfolio Website Preview](https://via.placeholder.com/800x400?text=Portfolio+Website+Preview)
+![Portfolio Website Preview](https://smsx.netlify.app)
 
 ## ✨ Features
 
