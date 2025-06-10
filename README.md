@@ -29,40 +29,7 @@ A modern, fast, and responsive portfolio-resume website built with Astro. Perfec
 - [React](https://reactjs.org/) for interactive components (presumed)
 - Responsive design principles
 
-## 🚀 Getting Started
 
-### Prerequisites
-
-- Node.js (v14.18.0 or higher)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/sms03/My-Portfolio-Resume-Astro.git
-```
-
-2. Navigate to the project directory
-```bash
-cd My-Portfolio-Resume-Astro
-```
-
-3. Install dependencies
-```bash
-npm install
-# or
-yarn install
-```
-
-4. Start the development server
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-5. Open your browser and visit `http://localhost:3000`
 
 ## 📝 Customization
 
