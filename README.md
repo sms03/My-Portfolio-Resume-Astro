@@ -87,8 +87,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 🙏 Acknowledgments
 
-**JustGoodUI***
-@justgoodui(https://github.com/JustGoodUI/dante-astro-theme)
+**JustGoodUI**
+[@justgoodui](https://github.com/JustGoodUI/dante-astro-theme)
 
 
 - [Astro](https://astro.build/) for the amazing framework
