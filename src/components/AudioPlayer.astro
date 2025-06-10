@@ -1,0 +1,137 @@
+---
+interface Props {
+    audioSrc: string;
+    title?: string;
+    className?: string;
+}
+
+const { audioSrc, title = 'Play Audio', className = '' } = Astro.props;
+---
+
+<div class={`audio-player ${className}`}>
+    <button class="play-pause-btn" aria-label={title} data-audio-src={audioSrc}>
+        <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 5V19L19 12L8 5Z" fill="currentColor"></path>
+        </svg>
+        <svg class="pause-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 4H10V20H6V4ZM14 4H18V20H14V4Z" fill="currentColor"></path>
+        </svg>
+    </button>
+    <audio class="hidden" preload="none">
+        <source src={audioSrc} type="audio/wav" />
+        <source src={audioSrc} type="audio/mp3" />
+        <source src={audioSrc} type="audio/ogg" />
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<style>
+    .audio-player {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .play-pause-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        border: 1.5px solid var(--text-main);
+        background: transparent;
+        color: var(--text-main);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .play-pause-btn:hover {
+        background: var(--text-main);
+        color: var(--bg-main);
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .play-pause-btn:active {
+        transform: scale(0.95);
+    }
+    .play-icon,
+    .pause-icon {
+        transition: opacity 0.2s ease;
+        width: 20px;
+        height: 20px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Loading state */
+    .play-pause-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    } /* Responsive adjustments */
+    @media (max-width: 640px) {
+        .play-pause-btn {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .play-icon,
+        .pause-icon {
+            width: 20px;
+            height: 20px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('astro:page-load', () => {
+        const audioPlayers = document.querySelectorAll('.audio-player');
+
+        audioPlayers.forEach((player) => {
+            const button = player.querySelector('.play-pause-btn') as HTMLButtonElement;
+            const playIcon = player.querySelector('.play-icon') as SVGElement;
+            const pauseIcon = player.querySelector('.pause-icon') as SVGElement;
+            const audio = player.querySelector('audio') as HTMLAudioElement;
+
+            if (!button || !playIcon || !pauseIcon || !audio) return;
+
+            let isPlaying = false;
+
+            button.addEventListener('click', async () => {
+                try {
+                    if (!isPlaying) {
+                        await audio.play();
+                        playIcon.classList.add('hidden');
+                        pauseIcon.classList.remove('hidden');
+                        isPlaying = true;
+                    } else {
+                        audio.pause();
+                        playIcon.classList.remove('hidden');
+                        pauseIcon.classList.add('hidden');
+                        isPlaying = false;
+                    }
+                } catch (error) {
+                    console.warn('Failed to play audio:', error);
+                    button.disabled = true;
+                    button.style.opacity = '0.5';
+                }
+            });
+
+            audio.addEventListener('ended', () => {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                isPlaying = false;
+            });
+
+            audio.addEventListener('error', () => {
+                console.warn('Audio failed to load');
+                button.disabled = true;
+                button.style.opacity = '0.5';
+            });
+        });
+    });
+</script>

@@ -1,5 +1,6 @@
 ---
 import siteConfig from '../data/site-config';
+import AudioPlayer from './AudioPlayer.astro';
 ---
 
 <header class="w-full max-w-3xl mx-auto mb-12 sm:mb-16 header-animate">
@@ -9,9 +10,12 @@ import siteConfig from '../data/site-config';
                 <img src={siteConfig.logo.src} alt={siteConfig.logo.alt || ''} class="max-h-12" />
             </a>
         ) : (
-            <a class="font-serif text-2xl leading-tight font-medium italic text-theme-foreground sm:text-4xl title-animate" href="/">
-                {siteConfig.title}
-            </a>
+            <div class="flex items-baseline gap-2">
+                <a class="font-serif text-2xl leading-tight font-medium italic text-theme-foreground sm:text-4xl title-animate" href="/">
+                    {siteConfig.title}
+                </a>
+                <AudioPlayer audioSrc="/audio/sms.wav" title="Play introduction" className="flex-shrink-0" />
+            </div>
         )
     }
     {siteConfig.subtitle && <p class="text-base leading-tight mt-2 sm:text-lg subtitle-animate">{siteConfig.subtitle}</p>}
