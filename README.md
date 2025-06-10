@@ -88,6 +88,8 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🙏 Acknowledgments
 
 **JustGoodUI**
+
+- GitHub:
 [@justgoodui](https://github.com/JustGoodUI/dante-astro-theme)
 
 
