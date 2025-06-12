@@ -1,0 +1,15 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'i'> {
+  name: string;
+  size?: string | number;
+}
+
+const { name, size, class: className, ...props } = Astro.props;
+
+// Convert size to appropriate class if needed
+const sizeClass = typeof size === 'number' ? `text-[${size}px]` : size ? `text-${size}` : '';
+---
+
+<i class:list={[`ri-${name}`, sizeClass, className]} {...props}></i>
