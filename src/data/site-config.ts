@@ -87,10 +87,6 @@ const siteConfig: SiteConfig = {
             href: 'https://www.behance.net/SMSXART'
         },
         {
-            text: 'Email',
-            href: 'mailto:shivamsal2000@gmail.com'
-        },
-        {
             text: 'GitHub',
             href: 'https://github.com/sms03'
         },
