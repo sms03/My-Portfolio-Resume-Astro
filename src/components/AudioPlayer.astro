@@ -12,8 +12,8 @@ const { audioSrc, title = 'Play Audio', className = '' } = Astro.props;
 
 <div class={`audio-player ${className}`}>
     <button class="play-pause-btn" aria-label={title} data-audio-src={audioSrc}>
-        <RemixIcon name="play-fill" class="play-icon" size="20" />
-        <RemixIcon name="pause-fill" class="pause-icon hidden" size="20" />
+        <RemixIcon name="play-fill" class="play-icon" size="24" />
+        <RemixIcon name="pause-fill" class="pause-icon hidden" size="24" />
     </button>
     <audio class="hidden" preload="none">
         <source src={audioSrc} type="audio/wav" />
@@ -28,53 +28,118 @@ const { audioSrc, title = 'Play Audio', className = '' } = Astro.props;
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-    }
-    .play-pause-btn {
+    }    .play-pause-btn {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
         border-radius: 50%;
-        border: 1.5px solid var(--text-main);
-        background: transparent;
+        border: 2px solid var(--text-main);
+        background: linear-gradient(135deg, transparent 0%, rgba(var(--text-main-rgb, 0, 0, 0), 0.05) 100%);
         color: var(--text-main);
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
+        box-shadow: 
+            0 2px 8px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .play-pause-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent 60%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
     }
 
     .play-pause-btn:hover {
-        background: var(--text-main);
+        background: linear-gradient(135deg, var(--text-main) 0%, rgba(var(--text-main-rgb, 0, 0, 0), 0.8) 100%);
         color: var(--bg-main);
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transform: scale(1.1) translateY(-1px);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.2),
+            0 4px 10px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border-color: var(--text-main);
+    }
+
+    .play-pause-btn:hover::before {
+        opacity: 1;
     }
 
     .play-pause-btn:active {
-        transform: scale(0.95);
-    }
-    .play-icon,
+        transform: scale(1.05) translateY(0);
+        transition: transform 0.1s ease;
+    }    .play-icon,
     .pause-icon {
-        transition: opacity 0.2s ease;
-        width: 20px;
-        height: 20px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 24px;
+        height: 24px;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Perfect centering for play icon */
+    .play-icon {
+        transform: translateX(1px);
+    }
+
+    .play-pause-btn:hover .play-icon,
+    .play-pause-btn:hover .pause-icon {
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .play-pause-btn:hover .play-icon {
+        transform: scale(1.1) translateX(1px);
+    }
+
+    .play-pause-btn:hover .pause-icon {
+        transform: scale(1.1);
     }
 
     .hidden {
         display: none;
-    }
-
-    /* Loading state */
+    }    /* Loading state */
     .play-pause-btn:disabled {
         opacity: 0.5;
         cursor: not-allowed;
-    } /* Responsive adjustments */
+        transform: none !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Playing state animation */
+    .play-pause-btn.playing {
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { 
+            box-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                0 0 0 0 rgba(var(--text-main-rgb, 0, 0, 0), 0.4);
+        }
+        50% { 
+            box-shadow: 
+                0 2px 8px rgba(0, 0, 0, 0.1),
+                0 0 0 8px rgba(var(--text-main-rgb, 0, 0, 0), 0);
+        }
+    }
+
+    /* Responsive adjustments */
     @media (max-width: 640px) {
         .play-pause-btn {
-            width: 1.25rem;
-            height: 1.25rem;
+            width: 2rem;
+            height: 2rem;
         }
 
         .play-icon,
@@ -97,19 +162,19 @@ const { audioSrc, title = 'Play Audio', className = '' } = Astro.props;
 
             if (!button || !playIcon || !pauseIcon || !audio) return;
 
-            let isPlaying = false;
-
-            button.addEventListener('click', async () => {
+            let isPlaying = false;            button.addEventListener('click', async () => {
                 try {
                     if (!isPlaying) {
                         await audio.play();
                         playIcon.classList.add('hidden');
                         pauseIcon.classList.remove('hidden');
+                        button.classList.add('playing');
                         isPlaying = true;
                     } else {
                         audio.pause();
                         playIcon.classList.remove('hidden');
                         pauseIcon.classList.add('hidden');
+                        button.classList.remove('playing');
                         isPlaying = false;
                     }
                 } catch (error) {
@@ -122,6 +187,7 @@ const { audioSrc, title = 'Play Audio', className = '' } = Astro.props;
             audio.addEventListener('ended', () => {
                 playIcon.classList.remove('hidden');
                 pauseIcon.classList.add('hidden');
+                button.classList.remove('playing');
                 isPlaying = false;
             });
 
