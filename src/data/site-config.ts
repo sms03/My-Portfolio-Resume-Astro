@@ -103,7 +103,7 @@ const siteConfig: SiteConfig = {
             href: 'https://www.linkedin.com/in/sms03'
         },
         {
-            text: 'X'
+            text: 'X',
             href: 'https://x.com/SMSxShivam'
         }
     ],
