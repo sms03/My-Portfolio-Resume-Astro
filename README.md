@@ -229,7 +229,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 **Special Thanks To:**
 - [JustGoodUI](https://github.com/JustGoodUI/dante-astro-theme) for the original Dante theme inspiration
 - [Astro Team](https://astro.build/) for the incredible framework
-- The amazing open-source community for continuous inspiration
 
 ---
 
