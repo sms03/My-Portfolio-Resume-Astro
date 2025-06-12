@@ -1,73 +1,103 @@
-# Portfolio Website
+# 🚀 My Portfolio Resume | Built with Astro
 
-A personal portfolio website built with Astro.js and Tailwind CSS, showcasing work as a 3D Artist and AI/Frontend Developer.
+![Astro Badge](https://img.shields.io/badge/Built%20with-Astro-orange?style=for-the-badge&logo=astro)
+![License](https://img.shields.io/github/license/sms03/My-Portfolio-Resume-Astro?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/sms03/My-Portfolio-Resume-Astro?style=for-the-badge)
 
-## Live Demo
+A modern, fast, and responsive portfolio-resume website built with Astro. Perfect for developers, designers, and professionals looking to showcase their work and experience in a clean, elegant interface.
 
-[View Portfolio Website](https://smsx.netlify.app/)
+[Portfolio Website Preview](https://smsx.netlify.app)
 
-## Portfolio Features:
+## ✨ Features
 
-- ✅ Responsive design with dark and light mode
-- ✅ 3D artwork gallery with lightbox view
-- ✅ Showcase of projects and development work
-- ✅ Skills and expertise section
-- ✅ Education and professional background
-- ✅ Contact information and professional profiles
-- ✅ Built with Astro.js and Tailwind CSS
-- ✅ SEO-friendly with metadata for better discoverability
-- ✅ Markdown & MDX content for easy updates
+- **⚡️ Lightning Fast Performance**: Built with Astro for optimized loading speeds
+- **📱 Fully Responsive**: Looks great on all devices - desktop, tablet, and mobile
+- **🎨 Customizable**: Easily modify colors, sections, and content
+- **🔍 SEO Optimized**: Structured for maximum search engine visibility
+- **📊 Project Showcase**: Highlight your best work with project cards and details
+- **📝 Dynamic Resume**: Display your professional experience and education
+- **🔧 Skills Section**: Showcase your technical and soft skills
+- **📬 Contact Form**: Allow visitors to reach out directly from your website
+- **🌙 Dark Mode**: Support for light and dark themes
 
-## Tech Stack
+## 🛠️ Technologies Used
 
-- **Framework**: Astro.js
-- **Styling**: Tailwind CSS
-- **Content**: MDX for rich content with components
-- **Deployment**: Netlify or Vercel
+- [Astro](https://astro.build/) - The web framework for content-driven websites
+- HTML5, CSS3, JavaScript
+- [TypeScript](https://www.typescriptlang.org/) for type safety
+- [Tailwind CSS](https://tailwindcss.com/) for styling (presumed)
+- [React](https://reactjs.org/) for interactive components (presumed)
+- Responsive design principles
 
-## Project Structure
 
-```text
-├── public/           # Static assets (images, etc.)
-├── src/
-│   ├── components/   # Reusable UI components
-│   ├── content/      # MDX content files
-│   │   ├── pages/    # Static pages (about, skills, etc.)
-│   │   ├── projects/ # Portfolio project files
-│   ├── data/         # Site configuration
-│   ├── icons/        # SVG icons
-│   ├── layouts/      # Page layouts
-│   ├── pages/        # Astro page components
-│   ├── styles/       # Global styles
-│   └── utils/        # Utility functions
-├── astro.config.mjs  # Astro configuration
-├── package.json      # Project dependencies
-└── tsconfig.json     # TypeScript configuration
+
+## 📝 Customization
+
+### Personal Information
+Edit the `src/data/personal.js` file to update your:
+- Name
+- Title
+- Bio
+- Contact information
+- Social media links
+
+### Projects
+Add your projects in the `src/data/projects.js` file:
+```javascript
+{
+  title: "Project Name",
+  description: "Short description of the project",
+  tags: ["Astro", "React", "Tailwind"],
+  image: "/images/project-1.webp",
+  link: "https://project-link.com",
+  github: "https://github.com/username/project"
+}
 ```
 
-## Development Commands
+### Experience & Education
+Update your professional experience and education in `src/data/resume.js`.
 
-All commands are run from the root of the project, from a terminal:
+### Skills
+Modify your skills in `src/data/skills.js`.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
+## 🌐 Deployment
 
-## About Me
+### Build for Production
+```bash
+npm run build
+# or
+yarn build
+```
 
-I'm a multidisciplinary professional working at the intersection of visual arts and technology. I combine expertise in CGI and VFX artistry with skills in AI development, prompt engineering, and web application development to create innovative digital solutions.
+Deploy the contents of the `dist` folder to your hosting provider of choice:
+- [Netlify](https://netlify.com)
+- [Vercel](https://vercel.com)
+- [GitHub Pages](https://pages.github.com/)
+- Any static site hosting service
 
-With a background in both Interior Design and Computer Applications, I bring a unique perspective to projects that bridges aesthetics and functionality. I've worked with international brands and artists.
+## 📄 License
 
-## Connect With Me
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-- **Behance**: [www.behance.net/SMSXART](https://www.behance.net/SMSXART)
-- **GitHub**: [github.com/sms03](https://github.com/sms03)
-- **Email**: [shivamsal2000@gmail.com](mailto:shivamsal2000@gmail.com)
+## 👤 Author
+
+**SMS03**
+
+- GitHub: [@sms03](https://github.com/sms03)
+
+## 🙏 Acknowledgments
+
+**JustGoodUI**
+
+- GitHub:
+[@justgoodui](https://github.com/JustGoodUI/dante-astro-theme)
+
+
+- [Astro](https://astro.build/) for the amazing framework
+- The open source community for inspiration and resources
 
 ---
 
-*This portfolio is based on the Dante Astro theme with customizations to showcase personal work and skills. Thanks to https://github.com/JustGoodUI*
+⭐️ If you found this helpful, please star the repository! ⭐️
+
+Made with ❤️ by SMS03
