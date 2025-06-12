@@ -62,12 +62,12 @@ const siteConfig: SiteConfig = {
             href: '/skills'
         },
         {
-            text: '3D Art',
-            href: '/3d-work'
-        },
-        {
             text: 'Socials',
             href: '/socials'
+        },
+        {
+            text: 'Xplore Art',
+            href: '/3d-work'
         },
         {
             text: 'Resume',
