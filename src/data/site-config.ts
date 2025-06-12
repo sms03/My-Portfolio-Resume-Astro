@@ -93,6 +93,10 @@ const siteConfig: SiteConfig = {
         {
             text: 'GitHub',
             href: 'https://github.com/sms03'
+        },
+        {
+            text: 'LinkedIn',
+            href: 'https://www.linkedin.com/in/sms03'
         }
     ],
     hero: {
