@@ -1,4 +1,6 @@
 ---
+import RemixIcon from './RemixIcon.astro';
+
 interface Props {
     audioSrc: string;
     title?: string;
@@ -10,12 +12,8 @@ const { audioSrc, title = 'Play Audio', className = '' } = Astro.props;
 
 <div class={`audio-player ${className}`}>
     <button class="play-pause-btn" aria-label={title} data-audio-src={audioSrc}>
-        <svg class="play-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 5V19L19 12L8 5Z" fill="currentColor"></path>
-        </svg>
-        <svg class="pause-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 4H10V20H6V4ZM14 4H18V20H14V4Z" fill="currentColor"></path>
-        </svg>
+        <RemixIcon name="play-fill" class="play-icon" size="20" />
+        <RemixIcon name="pause-fill" class="pause-icon hidden" size="20" />
     </button>
     <audio class="hidden" preload="none">
         <source src={audioSrc} type="audio/wav" />

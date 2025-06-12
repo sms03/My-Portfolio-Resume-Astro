@@ -1,5 +1,5 @@
 ---
-
+import RemixIcon from './RemixIcon.astro';
 ---
 
 <button
@@ -8,20 +8,7 @@
     aria-label="Back to top"
     onclick="window.scrollTo({top: 0, behavior: 'smooth'});"
 >
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-arrow-up"
-    >
-        <line x1="12" y1="19" x2="12" y2="5"></line>
-        <polyline points="5 12 12 5 19 12"></polyline>
-    </svg>
+    <RemixIcon name="arrow-up-line" size="20" />
 </button>
 <script>
     // Hide button when at the top, show when scrolled down
