@@ -101,6 +101,10 @@ const siteConfig: SiteConfig = {
         {
             text: 'LinkedIn',
             href: 'https://www.linkedin.com/in/sms03'
+        },
+        {
+            text: 'X'
+            href: 'https://x.com/SMSxShivam'
         }
     ],
     hero: {
