@@ -2,8 +2,12 @@
 import RemixIcon from './RemixIcon.astro';
 ---
 
-<button id="theme-toggle" class="w-8 h-8 -mr-2 flex items-center justify-center cursor-pointer" aria-label="Change color scheme">
-    <RemixIcon name="contrast-2-line" class="w-4 h-4" />
+<button
+    id="theme-toggle"
+    class="w-14 h-14 -mr-2 flex items-center justify-center cursor-pointer rounded-lg hover:bg-muted transition-colors"
+    aria-label="Change color scheme"
+>
+    <RemixIcon name="contrast-2-line" class="w-6 h-6" />
 </button>
 
 <script>
