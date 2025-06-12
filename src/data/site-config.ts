@@ -46,24 +46,24 @@ const siteConfig: SiteConfig = {
             href: '/'
         },
         {
-            text: 'Projects',
-            href: '/projects'
+            text: 'Education',
+            href: '/education'
         },
         {
             text: 'Experience',
             href: '/experience'
         },
         {
+            text: 'Projects',
+            href: '/projects'
+        },
+        {
             text: 'Skills',
             href: '/skills'
         },
         {
-            text: '3D Graphics',
+            text: '3D Art',
             href: '/3d-work'
-        },
-        {
-            text: 'Education',
-            href: '/education'
         },
         {
             text: 'Resume',
