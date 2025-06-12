@@ -1,6 +1,7 @@
 @import '@fontsource-variable/inter' layer(base);
 @import '@fontsource-variable/newsreader' layer(base);
 @import '@fontsource-variable/newsreader/wght-italic.css' layer(base);
+@import 'remixicon/fonts/remixicon.css';
 
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
