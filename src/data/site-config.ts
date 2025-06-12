@@ -33,7 +33,7 @@ export type SiteConfig = {
 
 const siteConfig: SiteConfig = {
     website: 'https://smsx.netlify.app',
-    title: 'SMS',
+    title: 'Shivam M. Salunkhe',
     subtitle: '3D Artist & AI Developer',
     description: 'Portfolio of Shivam M. Salunkhe - CGI and VFX Artist, AI Developer, Prompt Engineer, and Web App Developer',
     image: {
