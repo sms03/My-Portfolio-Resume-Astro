@@ -1,0 +1,249 @@
+---
+title: 'Portfolio Built with Astro'
+description: A modern, responsive portfolio website built with Astro, TypeScript, React, and Tailwind CSS featuring advanced animations, 3D galleries, and seamless user experience.
+publishDate: '2025-06-13'
+isFeatured: true
+seo:
+  image:
+    src: '/project ss/port.png'
+    alt: Shivam M. Salunkhe Portfolio Preview
+---
+import { Image } from 'astro:assets';
+import RemixIcon from '../../components/RemixIcon.astro';
+
+<div className="relative mb-8 rounded-lg overflow-hidden">
+  <Image 
+    src="/project ss/port.png" 
+    alt="Shivam M. Salunkhe Portfolio Preview" 
+    width={1920} 
+    height={1080}
+    className="w-full object-cover" 
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+    <div className="p-6">
+      <span className="bg-main text-main px-3 py-1 rounded-full text-sm font-medium mb-2 inline-block">Web Development</span>
+      <h1 className="text-white text-2xl md:text-3xl font-bold">Modern Portfolio Website</h1>
+    </div>
+  </div>
+</div>
+
+<div className="prose prose-slate dark:prose-invert mb-8">
+  <p className="text-lg font-medium">
+    <strong>Project Overview:</strong> A cutting-edge portfolio website built with Astro, showcasing modern web development practices and creative design. This project demonstrates expertise in static site generation, component-based architecture, and advanced web animations while maintaining excellent performance and user experience.
+  </p>
+</div>
+
+## Key Features
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="rocket-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">Modern Architecture</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Built with Astro for optimal performance</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>TypeScript for type safety and better DX</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Component-based architecture with Astro and React</span>
+      </li>
+    </ul>
+  </div>
+  
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="palette-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">Advanced Design</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Responsive design with Tailwind CSS</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Dark/Light theme toggle functionality</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Custom 3D circular gallery component</span>
+      </li>
+    </ul>
+  </div>
+  
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="magic-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">Interactive Elements</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>GSAP animations and scroll triggers</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Audio player integration</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Smooth page transitions</span>
+      </li>
+    </ul>
+  </div>
+  
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="seo-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">Performance & SEO</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Optimized for search engines</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Lighthouse performance scores 90+</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Automatic sitemap generation</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+## Technology Stack
+
+<div className="bg-muted p-6 rounded-lg mb-8">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="p-4 bg-background rounded-lg text-center">
+      <div className="w-16 h-16 bg-main text-main rounded-full flex items-center justify-center mx-auto mb-3">
+        <RemixIcon name="rocket-2-line" size="24" />
+      </div>
+      <h4 className="font-bold mb-1">Framework</h4>
+      <p className="text-sm">Astro with TypeScript for static site generation</p>
+    </div>
+    
+    <div className="p-4 bg-background rounded-lg text-center">
+      <div className="w-16 h-16 bg-main text-main rounded-full flex items-center justify-center mx-auto mb-3">
+        <RemixIcon name="reactjs-line" size="24" />
+      </div>
+      <h4 className="font-bold mb-1">Interactive Components</h4>
+      <p className="text-sm">React for dynamic UI components and 3D galleries</p>
+    </div>
+    
+    <div className="p-4 bg-background rounded-lg text-center">
+      <div className="w-16 h-16 bg-main text-main rounded-full flex items-center justify-center mx-auto mb-3">
+        <RemixIcon name="css3-line" size="24" />
+      </div>
+      <h4 className="font-bold mb-1">Styling</h4>
+      <p className="text-sm">Tailwind CSS for utility-first responsive design</p>
+    </div>    <div className="p-4 bg-background rounded-lg text-center">
+      <div className="w-16 h-16 bg-main text-main rounded-full flex items-center justify-center mx-auto mb-3">
+        <RemixIcon name="magic-line" size="24" />
+      </div>
+      <h4 className="font-bold mb-1">Animations</h4>
+      <p className="text-sm">GSAP and ScrollTrigger for smooth animations</p>
+    </div>
+  </div>
+</div>
+
+## Special Components
+
+<div className="prose prose-slate dark:prose-invert mb-8">
+  <h3>3D Circular Gallery</h3>
+  <p>Custom React component utilizing OGL (OpenGL) for WebGL-based 3D image galleries with smooth transitions and responsive design. Features include:</p>
+  <ul>
+    <li>Hardware-accelerated WebGL rendering</li>
+    <li>Responsive breakpoint handling</li>
+    <li>Custom shader programs for visual effects</li>
+    <li>Touch and mouse interaction support</li>
+  </ul>
+
+  <h3>Audio Integration</h3>
+  <p>Custom audio player component with:</p>
+  <ul>
+    <li>Multiple audio format support (WAV, MP3, OGG)</li>
+    <li>Play/pause state management</li>
+    <li>Accessible controls and ARIA labels</li>
+  </ul>
+
+  <h3>Theme System</h3>
+  <p>Comprehensive dark/light mode implementation featuring:</p>
+  <ul>
+    <li>System preference detection</li>
+    <li>Persistent theme storage</li>
+    <li>Smooth transitions between modes</li>
+  </ul>
+</div>
+
+## Development Process
+
+<div className="prose prose-slate dark:prose-invert mb-8">
+  <p>This portfolio represents the culmination of modern web development practices, showcasing skills in:</p>
+  <ul>
+    <li><strong>Static Site Generation:</strong> Leveraging Astro's islands architecture for optimal performance</li>
+    <li><strong>Component Architecture:</strong> Building reusable, maintainable components with TypeScript</li>
+    <li><strong>Performance Optimization:</strong> Image optimization, lazy loading, and efficient bundling</li>
+    <li><strong>Accessibility:</strong> WCAG compliance with proper ARIA labels and keyboard navigation</li>
+    <li><strong>SEO:</strong> Meta tags, structured data, and automatic sitemap generation</li>
+  </ul>
+</div>
+
+## Project Highlights
+
+<div className="bg-muted p-6 rounded-lg mb-8">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="text-center">
+      <div className="text-3xl font-bold text-main mb-2">90+</div>
+      <div className="text-sm font-medium">Lighthouse Score</div>
+    </div>
+    <div className="text-center">
+      <div className="text-3xl font-bold text-main mb-2">100%</div>
+      <div className="text-sm font-medium">TypeScript Coverage</div>
+    </div>
+    <div className="text-center">
+      <div className="text-3xl font-bold text-main mb-2">15+</div>
+      <div className="text-sm font-medium">Custom Components</div>
+    </div>
+  </div>
+</div>
+
+## Impact & Learning
+
+<div className="bg-muted p-6 rounded-lg mb-8">
+  <blockquote className="border-l-4 border-main pl-4 italic">
+    <p>This portfolio project demonstrates expertise in modern web development, showcasing the ability to create performant, accessible, and visually stunning web applications. It serves as both a professional showcase and a testament to technical skills in the latest web technologies.</p>
+  </blockquote>
+</div>
+
+<div className="bg-gradient-to-r from-main/20 to-main/10 p-6 rounded-lg mb-8 text-center">
+  <h2 className="text-2xl font-bold mb-4">Explore the Portfolio</h2>
+  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+    <a href="https://github.com/sms03/My-Portfolio-Resume-Astro" target="_blank" className="inline-flex items-center px-6 py-3 bg-main text-main rounded-lg hover:opacity-90 transition-opacity">
+      <RemixIcon name="github-fill" size="20" class="mr-2" />
+      <span className="font-bold">View Source Code</span>
+    </a>
+    <a href="/" className="inline-flex items-center px-6 py-3 border border-main text-main rounded-lg hover:bg-main hover:text-main transition-colors">
+      <RemixIcon name="external-link-line" size="20" class="mr-2" />
+      <span className="font-bold">Visit Live Site</span>
+    </a>
+  </div>
+</div>
