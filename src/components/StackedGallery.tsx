@@ -138,12 +138,10 @@ export default function StackedGallery({ items }: StackedGalleryProps) {
                                         <div className="absolute inset-0 bg-gradient-to-br from-gray-800/90 to-gray-900/90 flex items-center justify-center">
                                             <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin"></div>
                                         </div>
-                                    )}
-
-                                    <img
+                                    )}                                    <img
                                         src={item.image}
                                         alt={item.text}
-                                        className={`w-full h-full object-cover transition-all duration-700 ${imageLoaded[index] ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                                        className={`w-full h-full object-cover rounded-3xl transition-all duration-700 ${imageLoaded[index] ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
                                             }`}
                                         draggable={false}
                                         onLoad={() => handleImageLoad(index)}
