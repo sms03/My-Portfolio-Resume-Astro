@@ -620,11 +620,11 @@ class App {
     onTouchUp() {
         this.isDown = false;
         this.onCheck();
-    }    onWheel(e?: WheelEvent) {
+    } onWheel(e?: WheelEvent) {
         // Disable wheel scrolling completely for desktop (keep cursor drag only)
         // Only allow wheel on mobile for better touch experience
         const isMobile = window.innerWidth < 768;
-        
+
         if (isMobile) {
             const increment = 1.5;
             this.scroll.target += increment;

@@ -44,17 +44,17 @@ export default function ResponsiveGallery({
             clearTimeout(timeoutId);
         };
     }, []);
-  // Show loading state until we determine the device type
-  if (!isLoaded) {
-    return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="flex flex-col items-center space-y-4 animate-pulse">
-          <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin"></div>
-          <p className="text-sm text-white/70 font-medium">Loading Gallery...</p>
-        </div>
-      </div>
-    );
-  }
+    // Show loading state until we determine the device type
+    if (!isLoaded) {
+        return (
+            <div className="w-full h-full flex items-center justify-center">
+                <div className="flex flex-col items-center space-y-4 animate-pulse">
+                    <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin"></div>
+                    <p className="text-sm text-white/70 font-medium">Loading Gallery...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <>
