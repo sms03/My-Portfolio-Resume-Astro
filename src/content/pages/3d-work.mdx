@@ -5,8 +5,8 @@ seo:
   description: "A showcase of 3D artwork and renders"
 ---
 
-import CircularGallery from '../../components/CircularGallery.tsx';
 import RemixIcon from '../../components/RemixIcon.astro';
+import ResponsiveGallery from '../../components/ResponsiveGallery';
 
 export const artworks = [
   { image: '/3d-art/dbz.png', text: 'Dragon Ball Z Art' },
@@ -19,48 +19,48 @@ export const artworks = [
   { image: '/3d-art/tulip.jpg', text: 'Tulip Fields' }
 ];
 
+# *Gallery*
+
+<div className="prose prose-slate dark:prose-invert mb-8">
+  <p>Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures. <span className="hidden lg:inline">Use cursor drag to navigate through the circular gallery.</span><span className="lg:hidden">Swipe between cards or use navigation controls.</span></p>
+</div>
+
 <section class="max-w-7xl mx-auto py-4 px-3 sm:py-8 sm:px-6">
-  <div className="flex flex-col space-y-4 mb-6 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:mb-8">
-    <h1 class="text-4xl sm:text-5xl text-left font-serif tracking-tight italic">Gallery</h1>
-    <div className="flex gap-3 sm:gap-4 sm:ml-auto">
+  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">    <div className="flex gap-4 justify-center sm:justify-start order-2 sm:order-1">
       <a href="https://www.behance.net/SMSXART" target="_blank" rel="noopener noreferrer" 
-         className="inline-flex items-center justify-center p-2.5 sm:p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted active:scale-95 touch-manipulation" 
+         className="group relative inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 rounded-2xl transition-all duration-300 transform hover:scale-110 hover:shadow-xl active:scale-95 touch-manipulation overflow-hidden" 
          aria-label="View more on Behance">
-        <RemixIcon name="behance-fill" size="18" class="sm:size-5" />
+        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-300 rounded-2xl"></div>
+        <RemixIcon name="behance-fill" size="24" class="text-white relative z-10 transition-transform duration-300 group-hover:scale-110" />
+        <div className="absolute -inset-2 bg-gradient-to-br from-blue-400 to-blue-600 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-300 -z-10"></div>
       </a>
       <a href="https://www.instagram.com/smsxart" target="_blank" rel="noopener noreferrer" 
-         className="inline-flex items-center justify-center p-2.5 sm:p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted active:scale-95 touch-manipulation" 
+         className="group relative inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 rounded-2xl transition-all duration-300 transform hover:scale-110 hover:shadow-xl active:scale-95 touch-manipulation overflow-hidden" 
          aria-label="Follow on Instagram">
-        <RemixIcon name="instagram-line" size="18" class="sm:size-5" />
+        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-100 group-hover:opacity-0 transition-opacity duration-300 rounded-2xl"></div>
+        <RemixIcon name="instagram-line" size="24" class="text-white relative z-10 transition-transform duration-300 group-hover:scale-110" />
+        <div className="absolute -inset-2 bg-gradient-to-br from-pink-400 to-purple-600 opacity-0 group-hover:opacity-20 blur-xl transition-all duration-300 -z-10"></div>
       </a>
     </div>
-  </div>
-  
-  <div className="mb-4 sm:mb-6 text-left">
-    <p className="text-base sm:text-lg max-w-2xl leading-relaxed">
-      Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures. 
-      <span className="hidden sm:inline">Use mouse or touch to navigate through the gallery.</span>
-      <span className="sm:hidden">Swipe left or right to navigate through the gallery.</span>
-    </p>
+    
+    <div className="order-1 sm:order-2 text-center sm:text-right">
+      <p className="text-xs sm:text-sm text-muted-foreground/80">
+        💡 <strong className="text-muted-foreground">Tip:</strong> <span className="hidden lg:inline">Drag with cursor to navigate • No scroll wheel</span><span className="lg:hidden">Swipe between cards or tap progress indicators</span>
+      </p>
+    </div>
   </div>
 
   <div 
-    style={{ height: '400px', position: 'relative' }} 
-    className="h-[400px] sm:h-[500px] lg:h-[600px] rounded-lg overflow-hidden bg-gradient-to-b from-transparent to-muted/20 touch-none"
-  >
-    <CircularGallery 
+    className="h-[500px] sm:h-[600px] lg:h-[700px] overflow-hidden touch-none"
+  >    <ResponsiveGallery 
       items={artworks}
       bend={3} 
       textColor="#ffffff" 
       borderRadius={0.05}
-      font="600 20px 'Inter Variable', system-ui, -apple-system, sans-serif"
+      font="600 18px 'Inter Variable', system-ui, -apple-system, sans-serif"
       client:load
     />
-  </div>
-  
-  <div className="mt-4 sm:mt-8 text-left">
-    <p className="text-xs sm:text-sm opacity-80">
-      💡 <strong>Tip:</strong> <span className="hidden sm:inline">Drag to scroll horizontally or use your mouse wheel to navigate</span><span className="sm:hidden">Swipe to navigate between artworks</span>
-    </p>
   </div>
 </section>
