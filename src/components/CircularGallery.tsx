@@ -139,11 +139,19 @@ class Title {
         });
         this.mesh = new Mesh(this.gl, { geometry, program });
         const aspect = width / height;
-        const textHeightScaled = this.plane.scale.y * 0.15;
+
+        // Mobile-responsive text scaling
+        const isMobile = window.innerWidth < 768;
+        const textScaleFactor = isMobile ? 0.12 : 0.15;
+        const textHeightScaled = this.plane.scale.y * textScaleFactor;
         const textWidthScaled = textHeightScaled * aspect;
+
         this.mesh.scale.set(textWidthScaled, textHeightScaled, 1);
+
+        // Adjust text position for mobile
+        const textOffset = isMobile ? 0.04 : 0.05;
         this.mesh.position.y =
-            -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - 0.05;
+            -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - textOffset;
         this.mesh.setParent(this.plane);
     }
 }
@@ -392,16 +400,28 @@ class Media {
                 ];
             }
         }
-        this.scale = this.screen.height / 1500;
+
+        // Mobile-optimized scaling
+        const isMobile = this.screen.width < 768;
+        const baseScale = isMobile ? this.screen.height / 1200 : this.screen.height / 1500;
+        this.scale = Math.max(baseScale, 0.3); // Minimum scale for very small screens
+
+        // Adjust plane sizes for mobile
+        const heightMultiplier = isMobile ? 700 : 900;
+        const widthMultiplier = isMobile ? 550 : 700;
+
         this.plane.scale.y =
-            (this.viewport.height * (900 * this.scale)) / this.screen.height;
+            (this.viewport.height * (heightMultiplier * this.scale)) / this.screen.height;
         this.plane.scale.x =
-            (this.viewport.width * (700 * this.scale)) / this.screen.width;
+            (this.viewport.width * (widthMultiplier * this.scale)) / this.screen.width;
+
         this.plane.program.uniforms.uPlaneSizes.value = [
             this.plane.scale.x,
             this.plane.scale.y,
         ];
-        this.padding = 2;
+
+        // Adjust padding for mobile
+        this.padding = isMobile ? 1.5 : 2;
         this.width = this.plane.scale.x + this.padding;
         this.widthTotal = this.width * this.length;
         this.x = this.width * this.index;
@@ -457,8 +477,17 @@ class App {
     ) {
         document.documentElement.classList.remove("no-js");
         this.container = container;
-        this.scroll = { ease: 0.05, current: 0, target: 0, last: 0 };
-        this.onCheckDebounce = debounce(this.onCheck.bind(this), 200);
+
+        // Mobile-optimized scroll configuration
+        const isMobile = window.innerWidth < 768;
+        this.scroll = {
+            ease: isMobile ? 0.08 : 0.05, // Slightly faster easing on mobile
+            current: 0,
+            target: 0,
+            last: 0
+        };
+
+        this.onCheckDebounce = debounce(this.onCheck.bind(this), isMobile ? 150 : 200);
         this.createRenderer();
         this.createCamera();
         this.createScene();
@@ -564,13 +593,28 @@ class App {
         this.isDown = true;
         this.scroll.position = this.scroll.current;
         this.start = "touches" in e ? e.touches[0].clientX : e.clientX;
+
+        // Prevent default scroll behavior on mobile
+        if ("touches" in e) {
+            e.preventDefault();
+        }
     }
 
     onTouchMove(e: MouseEvent | TouchEvent) {
         if (!this.isDown) return;
+
         const x = "touches" in e ? e.touches[0].clientX : e.clientX;
-        const distance = (this.start - x) * 0.05;
+        const isMobile = window.innerWidth < 768;
+
+        // Increase sensitivity for mobile
+        const sensitivity = isMobile ? 0.08 : 0.05;
+        const distance = (this.start - x) * sensitivity;
         this.scroll.target = (this.scroll.position ?? 0) + distance;
+
+        // Prevent default scroll behavior on mobile
+        if ("touches" in e) {
+            e.preventDefault();
+        }
     }
 
     onTouchUp() {
@@ -578,9 +622,16 @@ class App {
         this.onCheck();
     }
 
-    onWheel() {
-        this.scroll.target += 2;
+    onWheel(e?: WheelEvent) {
+        // Reduce wheel sensitivity on mobile/touchpad
+        const isMobile = window.innerWidth < 768;
+        const increment = isMobile ? 1.5 : 2;
+        this.scroll.target += increment;
         this.onCheckDebounce();
+
+        if (e) {
+            e.preventDefault();
+        }
     }
 
     onCheck() {
@@ -632,14 +683,21 @@ class App {
         this.boundOnTouchDown = this.onTouchDown.bind(this);
         this.boundOnTouchMove = this.onTouchMove.bind(this);
         this.boundOnTouchUp = this.onTouchUp.bind(this);
+
         window.addEventListener("resize", this.boundOnResize);
-        window.addEventListener("mousewheel", this.boundOnWheel);
-        window.addEventListener("wheel", this.boundOnWheel);
+
+        // Use passive: false for wheel to enable preventDefault
+        window.addEventListener("mousewheel", this.boundOnWheel, { passive: false });
+        window.addEventListener("wheel", this.boundOnWheel, { passive: false });
+
+        // Desktop events
         window.addEventListener("mousedown", this.boundOnTouchDown);
-        window.addEventListener("mousemove", this.boundOnTouchMove);
+        window.addEventListener("mousemove", this.boundOnTouchMove, { passive: true });
         window.addEventListener("mouseup", this.boundOnTouchUp);
-        window.addEventListener("touchstart", this.boundOnTouchDown);
-        window.addEventListener("touchmove", this.boundOnTouchMove);
+
+        // Mobile touch events with passive: false to enable preventDefault
+        window.addEventListener("touchstart", this.boundOnTouchDown, { passive: false });
+        window.addEventListener("touchmove", this.boundOnTouchMove, { passive: false });
         window.addEventListener("touchend", this.boundOnTouchUp);
     }
 
@@ -679,24 +737,37 @@ export default function CircularGallery({
     bend = 3,
     textColor = "#ffffff",
     borderRadius = 0.05,
-    font = "600 24px 'Inter Variable', system-ui, -apple-system, sans-serif",
+    font = "600 20px 'Inter Variable', system-ui, -apple-system, sans-serif",
 }: CircularGalleryProps) {
     const containerRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         if (!containerRef.current) return;
+
+        // Adjust font size for mobile
+        const isMobile = window.innerWidth < 768;
+        const adjustedFont = isMobile
+            ? font.replace(/\d+px/, '18px')
+            : font;
+
         const app = new App(containerRef.current, {
             items,
             bend,
             textColor,
             borderRadius,
-            font,
+            font: adjustedFont,
         });
         return () => {
             app.destroy();
         };
     }, [items, bend, textColor, borderRadius, font]);
+
     return <div
-        className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing"
+        className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing touch-none select-none"
         ref={containerRef}
+        style={{
+            WebkitUserSelect: 'none',
+            WebkitTouchCallout: 'none',
+            WebkitTapHighlightColor: 'transparent'
+        }}
     />;
 }
