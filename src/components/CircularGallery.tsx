@@ -496,13 +496,27 @@ class App {
         this.createMedias(items, bend, textColor, borderRadius, font);
         this.update();
         this.addEventListeners();
-    }
-
-    createRenderer() {
+    } createRenderer() {
         this.renderer = new Renderer({ alpha: true });
         this.gl = this.renderer.gl;
         this.gl.clearColor(0, 0, 0, 0);
-        this.container.appendChild(this.renderer.gl.canvas as HTMLCanvasElement);
+
+        const canvas = this.renderer.gl.canvas as HTMLCanvasElement;
+
+        // Add styling for desktop centering
+        const isDesktop = window.innerWidth >= 768;
+        if (isDesktop) {
+            canvas.style.width = '720px';
+            canvas.style.height = '720px';
+            canvas.style.maxWidth = '100%';
+            canvas.style.maxHeight = '100%';
+            canvas.style.objectFit = 'contain';
+        } else {
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+        }
+
+        this.container.appendChild(canvas);
     }
 
     createCamera() {
@@ -642,13 +656,40 @@ class App {
         const itemIndex = Math.round(Math.abs(this.scroll.target) / width);
         const item = width * itemIndex;
         this.scroll.target = this.scroll.target < 0 ? -item : item;
-    }
+    } onResize() {
+        // Check if desktop view
+        const isDesktop = window.innerWidth >= 768;
 
-    onResize() {
-        this.screen = {
-            width: this.container.clientWidth,
-            height: this.container.clientHeight,
-        };
+        if (isDesktop) {
+            // Set fixed canvas size for desktop
+            this.screen = {
+                width: 720,
+                height: 720,
+            };
+        } else {
+            // Use container dimensions for mobile
+            this.screen = {
+                width: this.container.clientWidth,
+                height: this.container.clientHeight,
+            };
+        }
+
+        // Update canvas styling based on screen size
+        const canvas = this.renderer.gl.canvas as HTMLCanvasElement;
+        if (isDesktop) {
+            canvas.style.width = '720px';
+            canvas.style.height = '720px';
+            canvas.style.maxWidth = '100%';
+            canvas.style.maxHeight = '100%';
+            canvas.style.objectFit = 'contain';
+        } else {
+            canvas.style.width = '100%';
+            canvas.style.height = '100%';
+            canvas.style.maxWidth = 'none';
+            canvas.style.maxHeight = 'none';
+            canvas.style.objectFit = 'initial';
+        }
+
         this.renderer.setSize(this.screen.width, this.screen.height);
         this.camera.perspective({
             aspect: this.screen.width / this.screen.height,
@@ -761,10 +802,8 @@ export default function CircularGallery({
         return () => {
             app.destroy();
         };
-    }, [items, bend, textColor, borderRadius, font]);
-
-    return <div
-        className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing touch-none select-none"
+    }, [items, bend, textColor, borderRadius, font]); return <div
+        className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing touch-none select-none flex items-center justify-center"
         ref={containerRef}
         style={{
             WebkitUserSelect: 'none',
