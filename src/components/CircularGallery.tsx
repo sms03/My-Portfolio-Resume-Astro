@@ -620,14 +620,16 @@ class App {
     onTouchUp() {
         this.isDown = false;
         this.onCheck();
-    }
-
-    onWheel(e?: WheelEvent) {
-        // Reduce wheel sensitivity on mobile/touchpad
+    }    onWheel(e?: WheelEvent) {
+        // Disable wheel scrolling completely for desktop (keep cursor drag only)
+        // Only allow wheel on mobile for better touch experience
         const isMobile = window.innerWidth < 768;
-        const increment = isMobile ? 1.5 : 2;
-        this.scroll.target += increment;
-        this.onCheckDebounce();
+        
+        if (isMobile) {
+            const increment = 1.5;
+            this.scroll.target += increment;
+            this.onCheckDebounce();
+        }
 
         if (e) {
             e.preventDefault();
