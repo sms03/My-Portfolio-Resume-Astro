@@ -19,26 +19,29 @@ export const artworks = [
   { image: '/3d-art/tulip.jpg', text: 'Tulip Fields' }
 ];
 
-<div className="flex items-center gap-6 mb-8">
-  <h1 className="text-3xl font-bold">
+<div className="mb-8">
+  <h1 className="text-3xl font-bold mb-6">
     <em>Gallery</em>
   </h1>
-    <div className="flex gap-3">
-    <a href="https://www.behance.net/SMSXART" target="_blank" rel="noopener noreferrer" 
-       className="group relative inline-flex items-center justify-center w-10 h-10 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 touch-manipulation" 
-       aria-label="View more on Behance">
-      <RemixIcon name="behance-line" size="20" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-all duration-300 group-hover:scale-110" />
-    </a>
-    <a href="https://www.instagram.com/smsxart" target="_blank" rel="noopener noreferrer" 
-       className="group relative inline-flex items-center justify-center w-10 h-10 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 touch-manipulation" 
-       aria-label="Follow on Instagram">
-      <RemixIcon name="instagram-line" size="20" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-all duration-300 group-hover:scale-110" />
-    </a>
+  
+  <div className="flex items-center justify-between">
+    <div className="prose prose-slate dark:prose-invert">
+      <p>Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures. <span className="hidden lg:inline">Use cursor drag to navigate through the circular gallery.</span><span className="lg:hidden">Swipe between images.</span></p>
+    </div>
+    
+    <div className="flex gap-4 ml-6">
+      <a href="https://www.behance.net/SMSXART" target="_blank" rel="noopener noreferrer" 
+         className="group relative inline-flex items-center justify-center w-12 h-12 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 touch-manipulation" 
+         aria-label="View more on Behance">
+        <RemixIcon name="behance-line" size="24" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-all duration-300 group-hover:scale-110" />
+      </a>
+      <a href="https://www.instagram.com/smsxart" target="_blank" rel="noopener noreferrer" 
+         className="group relative inline-flex items-center justify-center w-12 h-12 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 touch-manipulation" 
+         aria-label="Follow on Instagram">
+        <RemixIcon name="instagram-line" size="24" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-all duration-300 group-hover:scale-110" />
+      </a>
+    </div>
   </div>
-</div>
-
-<div className="prose prose-slate dark:prose-invert mb-8">
-  <p>Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures. <span className="hidden lg:inline">Use cursor drag to navigate through the circular gallery.</span><span className="lg:hidden">Swipe between images.</span></p>
 </div>
 
 <section class="max-w-7xl mx-auto py-4 px-3 sm:py-8 sm:px-6">
