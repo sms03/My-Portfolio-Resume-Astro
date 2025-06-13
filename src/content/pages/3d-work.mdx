@@ -1,39 +1,61 @@
 ---
-title: "3D Work Gallery"
+title: "3D Art Gallery"
 seo:
-  title: "3D Artwork Gallery"
+  title: "3D Art Gallery"
   description: "A showcase of 3D artwork and renders"
 ---
 
-import Gallery from '../../components/Gallery.astro';
+import CircularGallery from '../../components/CircularGallery.tsx';
 import RemixIcon from '../../components/RemixIcon.astro';
 
 export const artworks = [
-  { src: '/3d-art/skull.png', title: 'Skull' },
-  { src: '/3d-art/dbz.png', title: 'Dragon Ball' },
-  { src: '/3d-art/tree.png', title: 'Farm' },
-  { src: '/3d-art/dezi.png', title: 'Daisey' },
-  { src: '/3d-art/roz.png', title: 'Rozey' },
-  { src: '/3d-art/tulip.jpg', title: 'Tulip' },
-  { src: '/3d-art/fiddle.jpg', title: 'Fiddler' },
-  { src: '/3d-art/edo.jpg', title: 'Edo' }
+  { image: '/3d-art/dbz.png', text: 'Dragon Ball Z Art' },
+  { image: '/3d-art/dezi.png', text: 'Desert Scene' },
+  { image: '/3d-art/edo.jpg', text: 'Edo Period' },
+  { image: '/3d-art/fiddle.jpg', text: 'Fiddle Leaf' },
+  { image: '/3d-art/roz.png', text: 'Rose Garden' },
+  { image: '/3d-art/skull.png', text: 'Skull Study' },
+  { image: '/3d-art/tree.png', text: 'Tree Landscape' },
+  { image: '/3d-art/tulip.jpg', text: 'Tulip Fields' }
 ];
 
-<section class="max-w-6xl mx-auto py-1 px-2 sm:px-1">
-  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
-    <h1 class="text-5xl text-left font-serif tracking-tight italic">Gallery</h1>
-    <div className="flex gap-4 mt-3 md:mt-0">
+<section class="max-w-7xl mx-auto py-8 px-4 sm:px-6">
+  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+    <h1 class="text-5xl text-left font-serif tracking-tight italic mb-4 md:mb-0">Gallery</h1>
+    <div className="flex gap-4 md:ml-auto">
       <a href="https://www.behance.net/SMSXART" target="_blank" rel="noopener noreferrer" 
-         className="inline-flex items-center justify-center p-2 text-main bg-main border border-main rounded-full transition hover:bg-muted" 
-         aria-label="Behance Profile">
+         className="inline-flex items-center justify-center p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted hover:scale-110 hover:shadow-lg" 
+         aria-label="View more on Behance">
         <RemixIcon name="behance-fill" size="20" />
       </a>
       <a href="https://www.instagram.com/smsxart" target="_blank" rel="noopener noreferrer" 
-         className="inline-flex items-center justify-center p-2 text-main bg-main border border-main rounded-full transition hover:bg-muted" 
-         aria-label="Instagram Profile">
+         className="inline-flex items-center justify-center p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted hover:scale-110 hover:shadow-lg" 
+         aria-label="Follow on Instagram">
         <RemixIcon name="instagram-line" size="20" />
       </a>
     </div>
   </div>
-  <Gallery images={artworks} />
+  
+  <div className="mb-6 text-left">
+    <p className="text-lg max-w-2xl">
+      Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures. 
+      Use mouse or touch to navigate through the gallery.
+    </p>
+  </div>
+
+  <div style={{ height: '600px', position: 'relative' }} className="rounded-lg overflow-hidden bg-gradient-to-b from-transparent to-muted/20">
+    <CircularGallery 
+      items={artworks}
+      bend={3} 
+      textColor="#ffffff" 
+      borderRadius={0.05}
+      font="600 24px 'Inter Variable', system-ui, -apple-system, sans-serif"
+      client:load
+    />  </div>
+  
+  <div className="mt-8 text-left">
+    <p className="text-sm">
+      💡 <strong>Pro tip:</strong> Drag to scroll horizontally or use your mouse wheel to navigate through the gallery
+    </p>
+  </div>
 </section>
