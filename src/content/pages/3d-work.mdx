@@ -48,11 +48,23 @@ export const artworks = [
          aria-label="Follow on Instagram">
         <RemixIcon name="instagram-line" size="24" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-all duration-300 group-hover:scale-110" />
       </a>
-    </div>
-  </div>
+    </div>  </div>
 </div>
 
-<section class="max-w-7xl mx-auto py-4 px-3 sm:py-8 sm:px-6">
+{/* Scroll Down Indicator */}
+<div className="flex justify-center mb-8">
+  <a 
+    href="#gallery-section"
+    className="animate-bounce cursor-pointer hover:scale-110 transition-transform duration-300 group no-underline"
+    aria-label="Scroll to gallery"
+  >
+    <div className="p-3 rounded-full border border-gray-300 dark:border-gray-600 group-hover:border-gray-500 dark:group-hover:border-gray-400 transition-colors">
+      <RemixIcon name="arrow-down-s-line" size="28" class="text-gray-500 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors" />
+    </div>
+  </a>
+</div>
+
+<section id="gallery-section" class="max-w-7xl mx-auto py-4 px-3 sm:py-8 sm:px-6">
 
   <div 
     className="h-[500px] sm:h-[600px] lg:h-[700px] overflow-hidden touch-none"
@@ -62,7 +74,6 @@ export const artworks = [
       textColor="#ffffff" 
       borderRadius={0.05}
       font="600 18px 'Inter Variable', system-ui, -apple-system, sans-serif"
-      client:load
-    />
+      client:load    />
   </div>
 </section>
