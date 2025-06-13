@@ -19,43 +19,48 @@ export const artworks = [
   { image: '/3d-art/tulip.jpg', text: 'Tulip Fields' }
 ];
 
-<section class="max-w-7xl mx-auto py-8 px-4 sm:px-6">
-  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-    <h1 class="text-5xl text-left font-serif tracking-tight italic mb-4 md:mb-0">Gallery</h1>
-    <div className="flex gap-4 md:ml-auto">
+<section class="max-w-7xl mx-auto py-4 px-3 sm:py-8 sm:px-6">
+  <div className="flex flex-col space-y-4 mb-6 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:mb-8">
+    <h1 class="text-4xl sm:text-5xl text-left font-serif tracking-tight italic">Gallery</h1>
+    <div className="flex gap-3 sm:gap-4 sm:ml-auto">
       <a href="https://www.behance.net/SMSXART" target="_blank" rel="noopener noreferrer" 
-         className="inline-flex items-center justify-center p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted hover:scale-110 hover:shadow-lg" 
+         className="inline-flex items-center justify-center p-2.5 sm:p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted active:scale-95 touch-manipulation" 
          aria-label="View more on Behance">
-        <RemixIcon name="behance-fill" size="20" />
+        <RemixIcon name="behance-fill" size="18" class="sm:size-5" />
       </a>
       <a href="https://www.instagram.com/smsxart" target="_blank" rel="noopener noreferrer" 
-         className="inline-flex items-center justify-center p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted hover:scale-110 hover:shadow-lg" 
+         className="inline-flex items-center justify-center p-2.5 sm:p-3 text-main bg-main border border-main rounded-full transition-all duration-300 hover:bg-muted active:scale-95 touch-manipulation" 
          aria-label="Follow on Instagram">
-        <RemixIcon name="instagram-line" size="20" />
+        <RemixIcon name="instagram-line" size="18" class="sm:size-5" />
       </a>
     </div>
   </div>
   
-  <div className="mb-6 text-left">
-    <p className="text-lg max-w-2xl">
+  <div className="mb-4 sm:mb-6 text-left">
+    <p className="text-base sm:text-lg max-w-2xl leading-relaxed">
       Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures. 
-      Use mouse or touch to navigate through the gallery.
+      <span className="hidden sm:inline">Use mouse or touch to navigate through the gallery.</span>
+      <span className="sm:hidden">Swipe left or right to navigate through the gallery.</span>
     </p>
   </div>
 
-  <div style={{ height: '600px', position: 'relative' }} className="rounded-lg overflow-hidden bg-gradient-to-b from-transparent to-muted/20">
+  <div 
+    style={{ height: '400px', position: 'relative' }} 
+    className="h-[400px] sm:h-[500px] lg:h-[600px] rounded-lg overflow-hidden bg-gradient-to-b from-transparent to-muted/20 touch-none"
+  >
     <CircularGallery 
       items={artworks}
       bend={3} 
       textColor="#ffffff" 
       borderRadius={0.05}
-      font="600 24px 'Inter Variable', system-ui, -apple-system, sans-serif"
+      font="600 20px 'Inter Variable', system-ui, -apple-system, sans-serif"
       client:load
-    />  </div>
+    />
+  </div>
   
-  <div className="mt-8 text-left">
-    <p className="text-sm">
-      💡 <strong>Pro tip:</strong> Drag to scroll horizontally or use your mouse wheel to navigate through the gallery
+  <div className="mt-4 sm:mt-8 text-left">
+    <p className="text-xs sm:text-sm opacity-80">
+      💡 <strong>Tip:</strong> <span className="hidden sm:inline">Drag to scroll horizontally or use your mouse wheel to navigate</span><span className="sm:hidden">Swipe to navigate between artworks</span>
     </p>
   </div>
 </section>
