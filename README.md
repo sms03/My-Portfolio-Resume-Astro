@@ -9,7 +9,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-![Portfolio Preview](./public/3d-art/gibli.png)
+![Portfolio Preview](./public/smsfev.png)
 
 *A cutting-edge portfolio showcasing the intersection of creative artistry and advanced technology*
 
