@@ -131,8 +131,8 @@ export default function StackedGallery({ items }: StackedGalleryProps) {
                                 opacity,
                                 pointerEvents: isActive ? 'auto' : 'none'
                             }}
-                        >              <div className="relative w-full h-full p-3 sm:p-5">
-                                <div className="relative w-full h-full bg-white/[0.02] backdrop-blur-sm rounded-3xl overflow-hidden shadow-xl border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300">
+                        >                            <div className="relative w-full h-full p-3 sm:p-5">
+                                <div className="relative w-full h-full rounded-3xl overflow-hidden">
                                     {/* Loading placeholder */}
                                     {!imageLoaded[index] && (
                                         <div className="absolute inset-0 bg-gradient-to-br from-gray-800/90 to-gray-900/90 flex items-center justify-center">
