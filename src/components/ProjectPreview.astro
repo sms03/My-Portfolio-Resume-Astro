@@ -1,17 +1,32 @@
 ---
 import { type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import ArrowRight from '../icons/ArrowRight.astro';
-import Gallery3D from '../pages/3d-work.mdx';
 
 type Props = { project: CollectionEntry<'projects'>; class?: string; headingLevel?: 'h2' | 'h3' };
 
 const { project, class: className, headingLevel = 'h2' } = Astro.props;
-const { title, description } = project.data;
+const { title, description, seo } = project.data;
 const TitleTag = headingLevel;
 ---
 
-<a class:list={['flex justify-between items-start gap-8 group project-card', className]} href={`/projects/${project.id}/`}>
-    <div class="grow">
+<a class:list={['flex flex-col sm:flex-row justify-between items-start gap-6 group project-card', className]} href={`/projects/${project.id}/`}>
+    {
+        seo?.image?.src && (
+            <div class="w-full sm:w-48 md:w-56 flex-shrink-0 order-2 sm:order-1">
+                <div class="aspect-video w-full rounded-lg overflow-hidden bg-muted">
+                    <Image
+                        src={seo.image.src}
+                        alt={seo.image.alt || title}
+                        width={400}
+                        height={225}
+                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                </div>
+            </div>
+        )
+    }
+    <div class="grow order-1 sm:order-2">
         <div class="flex items-center gap-3">
             <TitleTag
                 class="text-xl leading-tight font-serif font-medium group-hover:underline group-hover:decoration-dashed group-hover:underline-offset-4 group-hover:decoration-1 sm:text-2xl"
@@ -21,10 +36,9 @@ const TitleTag = headingLevel;
             {/* Ongoing status badge removed because 'status' does not exist in project.data */}
         </div>
         {description && <div class="mt-1 text-sm leading-normal">{description}</div>}
-        {/* GitHub link removed because githubLink does not exist in project.data */}
-    </div>
-    <div class="hidden font-serif italic opacity-0 transition group-hover:opacity-100 sm:inline-flex sm:gap-1 sm:items-center sm:shrink-0">
-        View Project <ArrowRight class="fill-current w-4 h-4" />
+        <div class="mt-4 font-serif italic opacity-70 group-hover:opacity-100 transition inline-flex gap-1 items-center">
+            View Project <ArrowRight class="fill-current w-4 h-4" />
+        </div>
     </div>
 </a>
 
