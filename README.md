@@ -10,6 +10,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
 ![Portfolio Preview](./public/smsfev.png)
+<img src="./public/smsfev.png" alt="Portfolio Preview" width="512" height="512">
 
 *A cutting-edge portfolio showcasing the intersection of creative artistry and advanced technology*
 
