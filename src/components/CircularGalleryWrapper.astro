@@ -1,0 +1,79 @@
+---
+interface Props {
+    items?: { image: string; text: string }[];
+    bend?: number;
+    textColor?: string;
+    borderRadius?: number;
+    font?: string;
+    height?: string;
+}
+
+const { items, bend = 3, textColor = '#ffffff', borderRadius = 0.05, font = 'bold 28px system-ui, -apple-system, sans-serif', height = '600px' } = Astro.props;
+---
+
+<div class="circular-gallery-wrapper" data-height={height}>
+    <div
+        id="circular-gallery-container"
+        style={`height: ${height}; position: relative; border-radius: 0.5rem; overflow: hidden; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.05))`}
+    >
+        <!-- Loading placeholder -->
+        <div class="loading-placeholder absolute inset-0 flex items-center justify-center">
+            <div class="flex flex-col items-center space-y-4">
+                <div class="animate-spin w-8 h-8 border-2 border-main border-t-transparent rounded-full"></div>
+                <p class="text-muted-foreground">Loading 3D Gallery...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script define:vars={{ items, bend, textColor, borderRadius, font }}>
+    // Import the CircularGallery dynamically on the client side
+    import('/src/components/CircularGallery.tsx')
+        .then(({ default: CircularGallery }) => {
+            // Wait for React to be available
+            const loadReact = async () => {
+                const React = await import('react');
+                const ReactDOM = await import('react-dom/client');
+
+                const container = document.getElementById('circular-gallery-container');
+                const placeholder = container?.querySelector('.loading-placeholder');
+
+                if (container && placeholder) {
+                    // Hide loading placeholder
+                    placeholder.style.display = 'none';
+
+                    // Create React element
+                    const galleryElement = React.createElement(CircularGallery, {
+                        items,
+                        bend,
+                        textColor,
+                        borderRadius,
+                        font
+                    });
+
+                    // Render the component
+                    const root = ReactDOM.createRoot(container);
+                    root.render(galleryElement);
+                }
+            };
+
+            loadReact().catch(console.error);
+        })
+        .catch(console.error);
+</script>
+
+<style>
+    .circular-gallery-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .loading-placeholder {
+        background: linear-gradient(135deg, transparent 0%, rgba(0, 0, 0, 0.02) 100%);
+    }
+
+    /* Smooth transitions */
+    .circular-gallery-wrapper * {
+        transition: opacity 0.3s ease;
+    }
+</style>
