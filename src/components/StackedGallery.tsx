@@ -12,14 +12,21 @@ export default function StackedGallery({ items }: StackedGalleryProps) {
     const [translateX, setTranslateX] = useState(0);
     const [imageLoaded, setImageLoaded] = useState<{ [key: number]: boolean }>({});
     const [showHint, setShowHint] = useState(true);
-    const containerRef = useRef<HTMLDivElement>(null);
-
-    // Hide hint after first interaction
+    const containerRef = useRef<HTMLDivElement>(null);    // Hide hint after first interaction or after 4 seconds
     useEffect(() => {
         if (currentIndex > 0) {
             setShowHint(false);
         }
     }, [currentIndex]);
+
+    // Auto-hide hint after 4 seconds
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowHint(false);
+        }, 4000);
+
+        return () => clearTimeout(timer);
+    }, []);
 
     const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
         setIsDragging(true);
@@ -164,7 +171,39 @@ export default function StackedGallery({ items }: StackedGalleryProps) {
                             </div>
                         </div>
                     );
-                })}      </div>
+                })}
+            </div>            {/* Swipe Arrow Indicator - Only show on mobile when not dragging */}
+            {showHint && !isDragging && (
+                <div className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 z-20">
+                    <div className="flex items-center space-x-2 bg-black/70 backdrop-blur-sm rounded-full px-3 py-2 border border-white/30 shadow-lg">
+                        <span className="text-white text-xs sm:text-sm font-medium">Swipe</span>
+                        <div className="flex space-x-0.5">
+                            <svg
+                                className="w-4 h-4 sm:w-5 sm:h-5 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                style={{
+                                    animation: 'slideRight 2s ease-in-out infinite'
+                                }}
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                            </svg>
+                            <svg
+                                className="w-4 h-4 sm:w-5 sm:h-5 text-white/60"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                style={{
+                                    animation: 'slideRight 2s ease-in-out infinite 0.3s'
+                                }}
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
