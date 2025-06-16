@@ -1,0 +1,298 @@
+---
+title: 'AI Fashion Advisor: Intelligent Style Recommendations'
+description: An AI-powered application that provides fashion advice based on uploaded images and context scenarios, developed before Google's Try-on feature.
+publishDate: '2025-05-08'
+isFeatured: true
+seo:
+  image:
+    src: '/project ss/ai-fa/Screenshot (49).png'
+    alt: AI Fashion Advisor platform interface
+---
+import { Image } from 'astro:assets';
+import RemixIcon from '../../components/RemixIcon.astro';
+
+<div className="relative mb-8 rounded-lg overflow-hidden">
+  <Image 
+    src="/project ss/ai-fa/Screenshot (49).png" 
+    alt="AI Fashion Advisor platform interface" 
+    width={1920} 
+    height={1080}
+    className="w-full object-cover" 
+  />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+    <div className="p-6">
+      <span className="bg-main text-main px-3 py-1 rounded-full text-sm font-medium mb-2 inline-block">Artificial Intelligence</span>
+      <h1 className="text-white text-2xl md:text-3xl font-bold">AI Fashion Advisor</h1>
+    </div>
+  </div>
+</div>
+
+<div className="prose prose-slate dark:prose-invert mb-8">
+  <p className="text-lg font-medium">
+    <strong>Project Overview:</strong> An innovative AI-powered fashion application that provides intelligent style recommendations based on uploaded images and contextual scenarios. This project was developed before Google released its own Try-on feature, showcasing early adoption of AI in fashion technology. The application integrates multiple AI services to deliver comprehensive fashion advice and generates personalized outfit suggestions.
+  </p>
+</div>
+
+## Key Features
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="image-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">Image Analysis</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Upload and analyze fashion images</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>AI-powered style recognition</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Context-aware recommendations</span>
+      </li>
+    </ul>
+  </div>
+
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="magic-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">AI Generation</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>DALL-E powered image generation</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Replicate API integration</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Stability AI for enhanced visuals</span>
+      </li>
+    </ul>
+  </div>
+
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="brain-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">Smart Analysis</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Google Gemini API integration</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Advanced text analysis</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Contextual understanding</span>
+      </li>
+    </ul>
+  </div>
+
+  <div className="bg-muted p-6 rounded-lg">
+    <div className="flex items-center mb-4">
+      <div className="w-12 h-12 bg-main text-main rounded-full flex items-center justify-center mr-4 flex-shrink-0">
+        <RemixIcon name="user-smile-line" size="24" />
+      </div>
+      <h3 className="text-xl font-bold">Personalized Advice</h3>
+    </div>
+    <ul className="space-y-2 pl-4">
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Custom fashion recommendations</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Scenario-based styling</span>
+      </li>
+      <li className="flex items-start">
+        <span className="w-1.5 h-1.5 bg-main rounded-full mt-2 mr-2"></span>
+        <span>Interactive fashion guidance</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+## Innovation Highlight
+
+<div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-6 rounded-lg mb-8 border border-blue-200 dark:border-blue-800">
+  <div className="flex items-start space-x-4">
+    <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center flex-shrink-0">
+      <RemixIcon name="lightbulb-line" size="24" />
+    </div>
+    <div>
+      <h3 className="text-xl font-bold text-blue-900 dark:text-blue-100 mb-2">Ahead of the Curve</h3>
+      <p className="text-blue-800 dark:text-blue-200">
+        This AI Fashion Advisor was developed and deployed <strong>before Google released its own Try it on feature</strong>, demonstrating early innovation in AI-powered fashion technology. The project showcases forward-thinking approach to combining multiple AI services for comprehensive fashion assistance.
+      </p>
+    </div>
+  </div>
+</div>
+
+## Technology Stack
+
+<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+  <div className="bg-muted p-4 rounded-lg text-center">
+    <RemixIcon name="google-line" size="32" class="mx-auto mb-2" />
+    <span className="font-semibold">Google Gemini</span>
+  </div>
+  <div className="bg-muted p-4 rounded-lg text-center">
+    <RemixIcon name="openai-line" size="32" class="mx-auto mb-2" />
+    <span className="font-semibold">OpenAI DALL-E</span>
+  </div>
+  <div className="bg-muted p-4 rounded-lg text-center">
+    <RemixIcon name="cloud-line" size="32" class="mx-auto mb-2" />
+    <span className="font-semibold">Replicate API</span>
+  </div>
+  <div className="bg-muted p-4 rounded-lg text-center">
+    <RemixIcon name="palette-line" size="32" class="mx-auto mb-2" />
+    <span className="font-semibold">Stability AI</span>
+  </div>
+</div>
+
+## Application Screenshots
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <div className="space-y-4">
+    <Image 
+      src="/project ss/ai-fa/Screenshot (50).png" 
+      alt="AI Fashion Advisor main interface" 
+      width={800} 
+      height={600}
+      className="w-full rounded-lg shadow-lg" 
+    />
+    <p className="text-sm text-gray-600 dark:text-gray-400 text-center">Main application interface with upload functionality</p>
+  </div>
+  
+  <div className="space-y-4">
+    <Image 
+      src="/project ss/ai-fa/Screenshot (51).png" 
+      alt="AI analysis and recommendations" 
+      width={800} 
+      height={600}
+      className="w-full rounded-lg shadow-lg" 
+    />
+    <p className="text-sm text-gray-600 dark:text-gray-400 text-center">AI-powered analysis and style recommendations</p>
+  </div>
+</div>
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+  <div className="space-y-2">
+    <Image 
+      src="/project ss/ai-fa/Screenshot (52).png" 
+      alt="Fashion advice generation" 
+      width={600} 
+      height={400}
+      className="w-full rounded-lg shadow-md" 
+    />
+    <p className="text-xs text-gray-600 dark:text-gray-400 text-center">Fashion advice generation process</p>
+  </div>
+  
+  <div className="space-y-2">
+    <Image 
+      src="/project ss/ai-fa/Screenshot (53).png" 
+      alt="Style suggestions display" 
+      width={600} 
+      height={400}
+      className="w-full rounded-lg shadow-md" 
+    />
+    <p className="text-xs text-gray-600 dark:text-gray-400 text-center">Personalized style suggestions</p>
+  </div>
+  
+  <div className="space-y-2">
+    <Image 
+      src="/project ss/ai-fa/Screenshot (54).png" 
+      alt="AI-generated outfit visualizations" 
+      width={600} 
+      height={400}
+      className="w-full rounded-lg shadow-md" 
+    />
+    <p className="text-xs text-gray-600 dark:text-gray-400 text-center">AI-generated outfit visualizations</p>
+  </div>
+</div>
+
+## Additional Features
+
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+  <div className="bg-muted p-6 rounded-lg">
+    <h3 className="text-xl font-bold mb-4 flex items-center">
+      <RemixIcon name="settings-line" size="24" class="mr-2" />
+      Advanced Capabilities
+    </h3>
+    <ul className="space-y-3">
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>Multi-modal AI integration for comprehensive analysis</span>
+      </li>
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>Context-aware recommendations based on occasions</span>
+      </li>
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>Real-time fashion trend analysis</span>
+      </li>
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>Personalized style preference learning</span>
+      </li>
+    </ul>
+  </div>
+  
+  <div className="bg-muted p-6 rounded-lg">
+    <h3 className="text-xl font-bold mb-4 flex items-center">
+      <RemixIcon name="code-line" size="24" class="mr-2" />
+      Technical Implementation
+    </h3>
+    <ul className="space-y-3">
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>RESTful API architecture for seamless integration</span>
+      </li>
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>Efficient image processing and optimization</span>
+      </li>
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>Responsive web design for cross-platform compatibility</span>
+      </li>
+      <li className="flex items-start">
+        <RemixIcon name="check-line" size="16" class="text-green-500 mt-1 mr-2 flex-shrink-0" />
+        <span>Secure API key management and data handling</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<div className="bg-gradient-to-r from-main/20 to-main/10 p-6 rounded-lg mb-8 text-center">
+  <h2 className="text-2xl font-bold mb-4">View Source Code</h2>
+  <a href="https://github.com/sms03/AI-Fashion-Advisor" target="_blank" className="inline-flex items-center px-6 py-3 bg-main text-main rounded-lg hover:opacity-90 transition-opacity">
+    <RemixIcon name="github-line" size="20" class="mr-2" />
+    <span className="font-bold mr-2">Explore AI Fashion Advisor</span>
+    <RemixIcon name="external-link-line" size="20" />
+  </a>
+</div>
+
+---
+
+<div className="text-center text-sm text-gray-600 dark:text-gray-400 mt-8">
+  <p><em>Developed with passion for AI innovation and fashion technology • Pioneering AI fashion solutions before major tech giants</em></p>
+</div>
