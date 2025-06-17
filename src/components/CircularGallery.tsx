@@ -40,7 +40,7 @@ function getFontSize(font: string): number {
 function createTextTexture(
     gl: GL,
     text: string,
-    font: string = "bold 30px monospace",
+    font: string = "600 20px 'Newsreader Variable', 'Newsreader', serif",
     color: string = "black"
 ): { texture: Texture; width: number; height: number } {
     const canvas = document.createElement("canvas");
@@ -92,7 +92,7 @@ class Title {
         renderer,
         text,
         textColor = "#ffffff",
-        font = "600 24px 'Inter Variable', system-ui, -apple-system, sans-serif",
+        font = "600 20px 'Newsreader Variable', 'Newsreader', serif",
     }: TitleProps) {
         autoBind(this);
         this.gl = gl;
@@ -240,11 +240,17 @@ class Media {
         this.bend = bend;
         this.textColor = textColor;
         this.borderRadius = borderRadius;
-        this.font = font;
-        this.createShader();
+        this.font = font; this.createShader();
         this.createMesh();
         this.createTitle();
         this.onResize();
+
+        // Set initial position immediately to prevent stacking
+        this.plane.position.x = this.x;
+        this.extra = 0;
+
+        // Apply initial circular formation
+        this.applyCircularPosition(0);
     }
 
     createShader() {
@@ -339,39 +345,19 @@ class Media {
             textColor: this.textColor,
             font: this.font,
         });
-    }
-
-    update(
+    } update(
         scroll: { current: number; last: number },
         direction: "right" | "left"
     ) {
-        this.plane.position.x = this.x - scroll.current - this.extra;
+        // Apply circular positioning
+        this.applyCircularPosition(scroll.current);
 
-        const x = this.plane.position.x;
-        const H = this.viewport.width / 2;
-
-        if (this.bend === 0) {
-            this.plane.position.y = 0;
-            this.plane.rotation.z = 0;
-        } else {
-            const B_abs = Math.abs(this.bend);
-            const R = (H * H + B_abs * B_abs) / (2 * B_abs);
-            const effectiveX = Math.min(Math.abs(x), H);
-
-            const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
-            if (this.bend > 0) {
-                this.plane.position.y = -arc;
-                this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
-            } else {
-                this.plane.position.y = arc;
-                this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
-            }
-        }
-
+        // Handle animation and speed
         this.speed = scroll.current - scroll.last;
         this.program.uniforms.uTime.value += 0.04;
         this.program.uniforms.uSpeed.value = this.speed;
 
+        // Handle infinite scrolling
         const planeOffset = this.plane.scale.x / 2;
         const viewportOffset = this.viewport.width / 2;
         this.isBefore = this.plane.position.x + planeOffset < -viewportOffset;
@@ -426,6 +412,33 @@ class Media {
         this.widthTotal = this.width * this.length;
         this.x = this.width * this.index;
     }
+
+    applyCircularPosition(scrollCurrent: number = 0) {
+        // Set horizontal position
+        this.plane.position.x = this.x - scrollCurrent - this.extra;
+
+        const x = this.plane.position.x;
+        const H = this.viewport.width / 2;
+
+        // Apply circular bend effect
+        if (this.bend === 0) {
+            this.plane.position.y = 0;
+            this.plane.rotation.z = 0;
+        } else {
+            const B_abs = Math.abs(this.bend);
+            const R = (H * H + B_abs * B_abs) / (2 * B_abs);
+            const effectiveX = Math.min(Math.abs(x), H);
+
+            const arc = R - Math.sqrt(R * R - effectiveX * effectiveX);
+            if (this.bend > 0) {
+                this.plane.position.y = -arc;
+                this.plane.rotation.z = -Math.sign(x) * Math.asin(effectiveX / R);
+            } else {
+                this.plane.position.y = arc;
+                this.plane.rotation.z = Math.sign(x) * Math.asin(effectiveX / R);
+            }
+        }
+    }
 }
 
 interface AppConfig {
@@ -472,41 +485,53 @@ class App {
             bend = 1,
             textColor = "#ffffff",
             borderRadius = 0,
-            font = "600 24px 'Inter Variable', system-ui, -apple-system, sans-serif",
+            font = "600 20px 'Newsreader Variable', 'Newsreader', serif",
         }: AppConfig
     ) {
         document.documentElement.classList.remove("no-js");
-        this.container = container;
-
-        // Mobile-optimized scroll configuration
+        this.container = container;        // Mobile-optimized scroll configuration - Enhanced for smoother swiping
         const isMobile = window.innerWidth < 768;
         this.scroll = {
-            ease: isMobile ? 0.08 : 0.05, // Slightly faster easing on mobile
+            ease: isMobile ? 0.12 : 0.08, // Increased easing for smoother transitions
             current: 0,
             target: 0,
             last: 0
-        };
-
-        this.onCheckDebounce = debounce(this.onCheck.bind(this), isMobile ? 150 : 200);
+        }; this.onCheckDebounce = debounce(this.onCheck.bind(this), isMobile ? 100 : 150); // Reduced debounce for faster response
         this.createRenderer();
         this.createCamera();
         this.createScene();
         this.onResize();
         this.createGeometry();
         this.createMedias(items, bend, textColor, borderRadius, font);
-        this.update();
+        // Initialize positions to prevent stacking on page load
+        this.scroll.current = 0;
+        this.scroll.target = 0;
+        this.scroll.last = 0;
+
+        // Ensure all media are properly positioned in circular formation
+        if (this.medias) {
+            this.medias.forEach((media) => {
+                media.plane.position.x = media.x;
+                media.extra = 0;
+                // Apply circular formation immediately
+                media.applyCircularPosition(0);
+            });
+        }
+
+        // Small delay to ensure smooth initialization
+        requestAnimationFrame(() => {
+            this.update();
+        });
         this.addEventListeners();
     } createRenderer() {
         this.renderer = new Renderer({ alpha: true });
         this.gl = this.renderer.gl;
         this.gl.clearColor(0, 0, 0, 0);
 
-        const canvas = this.renderer.gl.canvas as HTMLCanvasElement;
-
-        // Add styling for desktop centering
+        const canvas = this.renderer.gl.canvas as HTMLCanvasElement;        // Add styling for desktop centering - increased width for wider viewing
         const isDesktop = window.innerWidth >= 768;
         if (isDesktop) {
-            canvas.style.width = '720px';
+            canvas.style.width = '1200px';
             canvas.style.height = '720px';
             canvas.style.maxWidth = '100%';
             canvas.style.maxHeight = '100%';
@@ -612,16 +637,14 @@ class App {
         if ("touches" in e) {
             e.preventDefault();
         }
-    }
-
-    onTouchMove(e: MouseEvent | TouchEvent) {
+    } onTouchMove(e: MouseEvent | TouchEvent) {
         if (!this.isDown) return;
 
         const x = "touches" in e ? e.touches[0].clientX : e.clientX;
         const isMobile = window.innerWidth < 768;
 
-        // Increase sensitivity for mobile
-        const sensitivity = isMobile ? 0.08 : 0.05;
+        // Enhanced sensitivity for smoother swiping
+        const sensitivity = isMobile ? 0.12 : 0.08; // Increased sensitivity for more responsive feel
         const distance = (this.start - x) * sensitivity;
         this.scroll.target = (this.scroll.position ?? 0) + distance;
 
@@ -635,19 +658,29 @@ class App {
         this.isDown = false;
         this.onCheck();
     } onWheel(e?: WheelEvent) {
-        // Disable wheel scrolling completely for desktop (keep cursor drag only)
-        // Only allow wheel on mobile for better touch experience
-        const isMobile = window.innerWidth < 768;
+        if (!e) return;
 
-        if (isMobile) {
-            const increment = 1.5;
-            this.scroll.target += increment;
+        // Check if user is holding Shift key for horizontal scrolling
+        // or if they're scrolling horizontally (e.deltaX)
+        const isHorizontalIntent = e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY);
+
+        if (isHorizontalIntent) {
+            // Only handle gallery scrolling when user intends horizontal movement
+            const isMobile = window.innerWidth < 768;
+            const increment = isMobile ? 1.5 : 0.8;
+
+            // Use deltaX if available, otherwise use deltaY with shift key
+            const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+            const direction = delta > 0 ? 1 : -1;
+            const speed = Math.min(Math.abs(delta) / 100, 2);
+
+            this.scroll.target += direction * increment * speed;
             this.onCheckDebounce();
-        }
 
-        if (e) {
+            // Only prevent default for horizontal scrolling
             e.preventDefault();
         }
+        // Allow normal vertical page scrolling when not holding Shift
     }
 
     onCheck() {
@@ -658,13 +691,11 @@ class App {
         this.scroll.target = this.scroll.target < 0 ? -item : item;
     } onResize() {
         // Check if desktop view
-        const isDesktop = window.innerWidth >= 768;
-
-        if (isDesktop) {
-            // Set fixed canvas size for desktop
+        const isDesktop = window.innerWidth >= 768; if (isDesktop) {
+            // Set fixed canvas size for desktop - wider aspect ratio
             this.screen = {
-                width: 720,
-                height: 720,
+                width: 1280,
+                height: 1024,
             };
         } else {
             // Use container dimensions for mobile
@@ -672,13 +703,11 @@ class App {
                 width: this.container.clientWidth,
                 height: this.container.clientHeight,
             };
-        }
-
-        // Update canvas styling based on screen size
+        }        // Update canvas styling based on screen size
         const canvas = this.renderer.gl.canvas as HTMLCanvasElement;
         if (isDesktop) {
-            canvas.style.width = '720px';
-            canvas.style.height = '720px';
+            canvas.style.width = '1280px';
+            canvas.style.height = '1024px';
             canvas.style.maxWidth = '100%';
             canvas.style.maxHeight = '100%';
             canvas.style.objectFit = 'contain';
@@ -703,45 +732,53 @@ class App {
                 media.onResize({ screen: this.screen, viewport: this.viewport })
             );
         }
-    }
-
-    update() {
+    } update() {
+        // Optimized scroll interpolation for smoother transitions
         this.scroll.current = lerp(
             this.scroll.current,
             this.scroll.target,
             this.scroll.ease
         );
-        const direction = this.scroll.current > this.scroll.last ? "right" : "left";
+
+        // Always update media positions for circular formation, but with threshold for performance
+        const scrollDelta = Math.abs(this.scroll.current - this.scroll.last);
+        const hasMovement = scrollDelta > 0.0001; // Very small threshold for smooth circular updates
+
         if (this.medias) {
-            this.medias.forEach((media) => media.update(this.scroll, direction));
+            if (hasMovement) {
+                const direction = this.scroll.current > this.scroll.last ? "right" : "left";
+                this.medias.forEach((media) => media.update(this.scroll, direction));
+            } else {
+                // Even when not moving, ensure circular formation is maintained
+                this.medias.forEach((media) => media.applyCircularPosition(this.scroll.current));
+            }
         }
+
         this.renderer.render({ scene: this.scene, camera: this.camera });
         this.scroll.last = this.scroll.current;
         this.raf = window.requestAnimationFrame(this.update.bind(this));
-    }
-
-    addEventListeners() {
+    } addEventListeners() {
         this.boundOnResize = this.onResize.bind(this);
         this.boundOnWheel = this.onWheel.bind(this);
         this.boundOnTouchDown = this.onTouchDown.bind(this);
         this.boundOnTouchMove = this.onTouchMove.bind(this);
         this.boundOnTouchUp = this.onTouchUp.bind(this);
 
-        window.addEventListener("resize", this.boundOnResize);
+        window.addEventListener("resize", this.boundOnResize, { passive: true });
 
         // Use passive: false for wheel to enable preventDefault
         window.addEventListener("mousewheel", this.boundOnWheel, { passive: false });
         window.addEventListener("wheel", this.boundOnWheel, { passive: false });
 
-        // Desktop events
-        window.addEventListener("mousedown", this.boundOnTouchDown);
+        // Desktop events - optimized for smooth interaction
+        window.addEventListener("mousedown", this.boundOnTouchDown, { passive: true });
         window.addEventListener("mousemove", this.boundOnTouchMove, { passive: true });
-        window.addEventListener("mouseup", this.boundOnTouchUp);
+        window.addEventListener("mouseup", this.boundOnTouchUp, { passive: true });
 
-        // Mobile touch events with passive: false to enable preventDefault
+        // Mobile touch events - optimized for smooth swiping
         window.addEventListener("touchstart", this.boundOnTouchDown, { passive: false });
         window.addEventListener("touchmove", this.boundOnTouchMove, { passive: false });
-        window.addEventListener("touchend", this.boundOnTouchUp);
+        window.addEventListener("touchend", this.boundOnTouchUp, { passive: true });
     }
 
     destroy() {

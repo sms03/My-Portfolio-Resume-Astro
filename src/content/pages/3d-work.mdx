@@ -52,19 +52,19 @@ export const artworks = [
 </div>
 
 {/* Scroll Down Indicator */}
-<div className="flex justify-center mb-8">
+<div className="flex justify-center mb-2 sm:mb-0">
   <a 
     href="#gallery-section"
     className="animate-bounce cursor-pointer hover:scale-110 transition-transform duration-300 group no-underline"
     aria-label="Scroll to gallery"
   >
-    <div className="p-3 rounded-full border border-gray-300 dark:border-gray-600 group-hover:border-gray-500 dark:group-hover:border-gray-400 transition-colors">
-      <RemixIcon name="arrow-down-s-line" size="24" class="text-gray-500 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300 transition-colors" />
+    <div className="p-2 sm:p-2 rounded-full border border-gray-300 dark:border-gray-600 group-hover:border-gray-500 dark:group-hover:border-gray-400 transition-all duration-300 bg-white/10 dark:bg-gray-800/30 backdrop-blur-sm">
+      <RemixIcon name="arrow-down-line" size="18" class="sm:size-20 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-all duration-300 group-hover:scale-110" />
     </div>
   </a>
 </div>
 
-<section id="gallery-section" class="max-w-7xl mx-auto py-4 px-3 sm:py-8 sm:px-6">
+<section id="gallery-section" class="max-w-7xl mx-auto py-0 px-3 sm:py-2 sm:px-6 -mt-8 sm:-mt-16">
 
   <div 
     className="h-[500px] sm:h-[600px] lg:h-[700px] overflow-hidden touch-none"
@@ -73,7 +73,7 @@ export const artworks = [
       bend={3} 
       textColor="#ffffff" 
       borderRadius={0.05}
-      font="600 18px 'Inter Variable', system-ui, -apple-system, sans-serif"
+      font="600 20px 'Newsreader Variable', 'Newsreader', serif"
       client:load    />
   </div>
 </section>
