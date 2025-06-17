@@ -20,7 +20,9 @@ const hero = siteConfig.hero;
             {hero.actions && hero.actions.length > 0 && (
                 <div class="flex flex-wrap gap-4 button-wrapper animate-on-scroll">
                     {hero.actions.map((action) => (
-                        <Button href={action.href}>{action.text}</Button>
+                        <div class="hover:scale-105 transition-transform duration-300">
+                            <Button href={action.href}>{action.text}</Button>
+                        </div>
                     ))}
                 </div>
             )}
