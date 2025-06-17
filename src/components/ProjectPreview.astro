@@ -3,16 +3,16 @@ import { type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import ArrowRight from '../icons/ArrowRight.astro';
 
-type Props = { project: CollectionEntry<'projects'>; class?: string; headingLevel?: 'h2' | 'h3' };
+type Props = { project: CollectionEntry<'projects'>; class?: string; headingLevel?: 'h2' | 'h3'; hideImage?: boolean };
 
-const { project, class: className, headingLevel = 'h2' } = Astro.props;
+const { project, class: className, headingLevel = 'h2', hideImage = false } = Astro.props;
 const { title, description, seo } = project.data;
 const TitleTag = headingLevel;
 ---
 
 <a class:list={['flex flex-col sm:flex-row justify-between items-start gap-6 group project-card', className]} href={`/projects/${project.id}/`}>
     {
-        seo?.image?.src && (
+        !hideImage && seo?.image?.src && (
             <div class="w-full sm:w-48 md:w-56 flex-shrink-0 order-2 sm:order-1">
                 <div class="aspect-video w-full rounded-lg overflow-hidden bg-muted">
                     <Image

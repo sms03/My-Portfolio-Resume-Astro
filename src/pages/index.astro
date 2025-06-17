@@ -18,10 +18,11 @@ const featuredProjects = projects.filter(({ data }) => data.isFeatured);
             <div class="mb-10 sm:mb-16">
                 <h2 class="mb-8 text-xl font-serif italic sm:mb-10 sm:text-2xl">Featured Projects</h2>
                 {featuredProjects.map((project) => (
-                    <ProjectPreview project={project} class="mb-6 sm:mb-8" headingLevel="h3" />
+                    <ProjectPreview project={project} class="mb-6 sm:mb-8" headingLevel="h3" hideImage={true} />
                 ))}
+
                 <div class="mt-8 sm:mt-10">
-                    <Button href="/projects">View All Projects</Button>
+                    <Button href="/skills">View My Projects</Button>
                 </div>
             </div>
         )
@@ -34,12 +35,15 @@ const featuredProjects = projects.filter(({ data }) => data.isFeatured);
             <p class="mb-3">Some of my recent projects include:</p>
             <ul class="space-y-1">
                 <li><a href="https://ren3der.vercel.app/" target="_blank" rel="noopener">Ren3der</a> - An online 3D and Graphics design calculator platform</li>
-                <li><a href="https://sharksenz.vercel.app" target="_blank" rel="noopener">SharkSenz</a> - A learning hub and metrics dashboard for new founders and entrepreneurs</li>
+                <li>
+                    <a href="https://sharksenz.vercel.app" target="_blank" rel="noopener">SharkSenz</a> - A learning hub and metrics dashboard for new founders and
+                    entrepreneurs
+                </li>
             </ul>
+        </div>
 
-            <div class="mt-8 sm:mt-10">
-                <Button href="/skills">View My Skills</Button>
-            </div>
+        <div class="mt-8 sm:mt-10">
+            <Button href="/skills">View My Skills</Button>
         </div>
     </div>
 </BaseLayout>
