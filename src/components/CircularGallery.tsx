@@ -85,6 +85,10 @@ class Title {
     textColor: string;
     font: string;
     mesh!: Mesh;
+    // Keep track of created resources for disposal
+    texture!: Texture;
+    program!: Program;
+    geometry!: Plane;
 
     constructor({
         gl,
@@ -137,7 +141,10 @@ class Title {
             uniforms: { tMap: { value: texture } },
             transparent: true,
         });
-        this.mesh = new Mesh(this.gl, { geometry, program });
+        this.texture = texture;
+        this.program = program;
+        this.geometry = geometry;
+        this.mesh = new Mesh(this.gl, { geometry: this.geometry, program: this.program });
         const aspect = width / height;
 
         // Mobile-responsive text scaling
@@ -153,6 +160,17 @@ class Title {
         this.mesh.position.y =
             -this.plane.scale.y * 0.5 - textHeightScaled * 0.5 - textOffset;
         this.mesh.setParent(this.plane);
+    }
+
+    destroy() {
+        // Dispose of WebGL resources
+        if (this.texture) this.texture.dispose();
+        if (this.program) this.program.dispose();
+        if (this.geometry) this.geometry.dispose();
+        // Mesh itself doesn't typically have a dispose, relies on geometry/program disposal
+        if (this.mesh && this.mesh.parent) {
+            this.mesh.parent.removeChild(this.mesh);
+        }
     }
 }
 
@@ -210,6 +228,7 @@ class Media {
     speed: number = 0;
     isBefore: boolean = false;
     isAfter: boolean = false;
+    imageTexture!: Texture; // To store the main image texture for disposal
 
     constructor({
         geometry,
@@ -253,8 +272,19 @@ class Media {
         this.applyCircularPosition(0);
     }
 
+    destroy() {
+        if (this.title) this.title.destroy();
+        if (this.imageTexture) this.imageTexture.dispose();
+        if (this.program) this.program.dispose();
+        // Geometry is shared, will be disposed by App class
+        // Remove mesh from scene
+        if (this.plane && this.plane.parent) {
+            this.plane.parent.removeChild(this.plane);
+        }
+    }
+
     createShader() {
-        const texture = new Texture(this.gl, { generateMipmaps: false });
+        this.imageTexture = new Texture(this.gl, { generateMipmaps: false });
         this.program = new Program(this.gl, {
             depthTest: false,
             depthWrite: false,
@@ -307,7 +337,7 @@ class Media {
         }
       `,
             uniforms: {
-                tMap: { value: texture },
+                tMap: { value: this.imageTexture },
                 uPlaneSizes: { value: [0, 0] },
                 uImageSizes: { value: [0, 0] },
                 uSpeed: { value: 0 },
@@ -320,7 +350,7 @@ class Media {
         img.crossOrigin = "anonymous";
         img.src = this.image;
         img.onload = () => {
-            texture.image = img;
+            this.imageTexture.image = img; // Assign to the stored texture instance
             this.program.uniforms.uImageSizes.value = [
                 img.naturalWidth,
                 img.naturalHeight,
@@ -801,6 +831,35 @@ class App {
                 this.renderer.gl.canvas as HTMLCanvasElement
             );
         }
+
+        // Dispose of medias
+        if (this.medias) {
+            this.medias.forEach((media) => media.destroy());
+            this.medias = []; // Clear the array
+        }
+
+        // Dispose of shared geometry
+        if (this.planeGeometry) this.planeGeometry.dispose();
+
+        // Dispose of camera and scene (if applicable, OGL Camera/Transform might not have dispose)
+        // For Camera and Transform, usually removing all children is enough.
+        // Scene (Transform) children (medias) are already handled.
+
+        // Finally, lose the WebGL context
+        if (this.renderer && this.renderer.gl) {
+            const loseContextExtension = this.renderer.gl.getExtension('WEBGL_lose_context');
+            if (loseContextExtension) {
+                loseContextExtension.loseContext();
+            }
+            // Some OGL versions might have renderer.dispose(), but loseContext is standard WebGL
+        }
+
+        // Nullify references
+        this.renderer = null!;
+        this.gl = null!;
+        this.camera = null!;
+        this.scene = null!;
+        this.planeGeometry = null!;
     }
 }
 
