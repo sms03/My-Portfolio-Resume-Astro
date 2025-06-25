@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageData = {
+    title: 'Resume - Shivam M. Salunkhe',
+    description: 'Download and view my professional resume showcasing my skills, experience, and educational background.',
+    image: {
+        src: '/hero.jpeg',
+        alt: 'Shivam M. Salunkhe Resume'
+    }
+};
+---
+
+<BaseLayout title={pageData.title} description={pageData.description} image={pageData.image}>
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Embedded Resume Viewer -->
+        <div class="mb-8">
+            <div
+                style="position: relative; width: 100%; height: 0; padding-top: 141.4286%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;"
+            >
+                <iframe
+                    loading="lazy"
+                    style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;"
+                    src="https://www.canva.com/design/DAGKby2KT6E/oN1IA9Kch_dK-Aygs1iwVA/view?embed"
+                    allowfullscreen="allowfullscreen"
+                    allow="fullscreen"
+                >
+                </iframe>
+            </div>
+
+            <!-- Download Button -->
+            <div class="text-center mt-6">
+                <a
+                    href="resume/ResumeV6.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center px-6 py-3 bg-main text-main rounded-lg hover:opacity-90 transition-opacity shadow-lg"
+                >
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        ></path>
+                    </svg>
+                    Download Resume PDF
+                </a>
+            </div>
+        </div>
+    </div>
+</BaseLayout>
