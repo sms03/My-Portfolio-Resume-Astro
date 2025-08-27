@@ -67,7 +67,7 @@ const siteConfig: SiteConfig = {
         },
         {
             text: 'Resume',
-            href: '/resume/Resume.pdf'
+            href: '/resume/Shivam_Salunkhe_Resume.pdf'
         }
     ],
     footerNavLinks: [
