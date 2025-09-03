@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
     const get = () => {
@@ -322,9 +323,9 @@ const Masonry: React.FC<MasonryProps> = ({
                 ))}
             </div>
 
-            {lightboxSrc && (
+            {lightboxSrc && typeof document !== 'undefined' && createPortal(
                 <div
-                    className="fixed inset-0 z-[999] bg-black/90 backdrop-blur-[1px] p-4 sm:p-6 flex items-center justify-center"
+                    className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-[1px] p-4 sm:p-6 flex items-center justify-center"
                     onClick={(e) => {
                         if (e.target === e.currentTarget) closeLightbox();
                     }}
@@ -349,7 +350,8 @@ const Masonry: React.FC<MasonryProps> = ({
                             draggable={false}
                         />
                     </div>
-                </div>
+                </div>,
+                document.body
             )}
         </>
     );
