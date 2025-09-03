@@ -5,8 +5,8 @@ seo:
   description: "A showcase of 3D artwork and renders"
 ---
 
+import Masonry from '../../components/Masonry';
 import RemixIcon from '../../components/RemixIcon.astro';
-import ResponsiveGallery from '../../components/ResponsiveGallery';
 
 export const artworks = [
   { image: '/3d-art/dbz.png', text: 'DBZ' },
@@ -24,8 +24,52 @@ export const artworks = [
   { image: '/3d-art/oost1.jpg', text: 'Oost' },
   { image: '/3d-art/oost2.jpg', text: 'Oost' },
   { image: '/3d-art/carcloudone.png', text: 'Cloud9' },
-  { image: '/3d-art/cadmium.jpg', text: 'Melody' }
+  { image: '/3d-art/cadmium.jpg', text: 'Melody' },
+  // New additions (33)
+  { image: '/3d-art/3D-Fracts (1).jpg', text: '3D Fracts 1' },
+  { image: '/3d-art/3D-Fracts (2).jpg', text: '3D Fracts 2' },
+  { image: '/3d-art/3D-Fracts (3).jpg', text: '3D Fracts 3' },
+  { image: '/3d-art/3D-Fracts (4).jpg', text: '3D Fracts 4' },
+  { image: '/3d-art/Boho1.png', text: 'Boho 1' },
+  { image: '/3d-art/Boho2.png', text: 'Boho 2' },
+  { image: '/3d-art/Boho3.png', text: 'Boho 3' },
+  { image: '/3d-art/Chatri_Edit.png', text: 'Chatri' },
+  { image: '/3d-art/Corv_3_Edit.png', text: 'Corvette' },
+  { image: '/3d-art/CyberDodgeEdit.jpg', text: 'Cyber Dodge' },
+  { image: '/3d-art/Fer458_BSide_Edit.png', text: '458 B-Side' },
+  { image: '/3d-art/Fer458_FFSide_Edit.png', text: '458 FF-Side' },
+  { image: '/3d-art/Fer458_FSide_Edit.png', text: '458 F-Side' },
+  { image: '/3d-art/Fer458_RBack_Edit.png', text: '458 Rear' },
+  { image: '/3d-art/Fer458_Top_Edit.png', text: '458 Top' },
+  { image: '/3d-art/Lambo_Edit.jpg', text: 'Lambo' },
+  { image: '/3d-art/M4_Back_Edit.png', text: 'M4 Back' },
+  { image: '/3d-art/M4_Front_Edit.png', text: 'M4 Front' },
+  { image: '/3d-art/M4_Test_Edit.jpg', text: 'M4 Test' },
+  { image: '/3d-art/McL_Edit.png', text: 'McLaren' },
+  { image: '/3d-art/Moonhead3_Edit_Neon.jpg', text: 'Moonhead Neon' },
+  { image: '/3d-art/Mustang_Front_Edit.png', text: 'Mustang Front' },
+  { image: '/3d-art/Mustang_Rear_Edit.png', text: 'Mustang Rear' },
+  { image: '/3d-art/Nike_Blobs_Edit.jpg', text: 'Nike Blobs' },
+  { image: '/3d-art/Pan1_InstaB.png', text: 'Pan 1' },
+  { image: '/3d-art/Pan2_InstaB.png', text: 'Pan 2' },
+  { image: '/3d-art/Pan3_InstaB.png', text: 'Pan 3' },
+  { image: '/3d-art/Pan4_InstaB.png', text: 'Pan 4' },
+  { image: '/3d-art/Rozey_E.png', text: 'Rozey' },
+  { image: '/3d-art/Skull_Flora_Edit.png', text: 'Skull Flora' },
+  { image: '/3d-art/SmidgeS_Edit.png', text: 'Smidge' },
+  { image: '/3d-art/Tropics.png', text: 'Tropics' },
+  { image: '/3d-art/Valent_Edit2.png', text: 'Valent' }
 ];
+
+export const heights = [600, 450, 520, 380, 560, 420, 640, 360, 500, 440, 580, 400];
+
+export const masonryItems = artworks.map((art, idx) => ({
+  id: String(idx + 1),
+  img: art.image,
+  url: 'https://www.behance.net/SMSXART',
+  // give varied heights to create a nice masonry effect
+  height: heights[idx % heights.length]
+}));
 
 <div className="mb-8">
   <h1 className="text-3xl font-bold mb-6">
@@ -34,7 +78,7 @@ export const artworks = [
   
   <div className="flex items-center justify-between">
     <div className="prose prose-slate dark:prose-invert">
-      <p>Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures. <span className="hidden lg:inline">Use cursor drag to navigate through the circular gallery.</span><span className="lg:hidden">Swipe between images.</span></p>
+  <p>Explore my 3D artwork collection featuring character designs, environmental scenes, and digital sculptures.</p>
     </div>
     
     <div className="flex gap-4 ml-6">
@@ -50,30 +94,20 @@ export const artworks = [
       </a>
     </div>  </div>
 </div>
+<section id="gallery-section" class="max-w-7xl mx-auto py-0 px-3 sm:py-2 sm:px-6 mt-6 sm:mt-10">
 
-{/* Scroll Down Indicator */}
-<div className="flex justify-center mb-2 sm:mb-0">
-  <a 
-    href="#gallery-section"
-    className="animate-bounce cursor-pointer hover:scale-110 transition-transform duration-300 group no-underline"
-    aria-label="Scroll to gallery"
-  >
-    <div className="p-2 sm:p-2 rounded-full border border-gray-300 dark:border-gray-600 group-hover:border-gray-500 dark:group-hover:border-gray-400 transition-all duration-300 bg-white/10 dark:bg-gray-800/30 backdrop-blur-sm">
-      <RemixIcon name="arrow-down-line" size="18" class="sm:size-20 text-gray-600 dark:text-gray-400 group-hover:text-gray-800 dark:group-hover:text-gray-200 transition-all duration-300 group-hover:scale-110" />
-    </div>
-  </a>
-</div>
-
-<section id="gallery-section" class="max-w-7xl mx-auto py-0 px-3 sm:py-2 sm:px-6 -mt-8 sm:-mt-16">
-
-  <div 
-    className="h-[500px] sm:h-[600px] lg:h-[700px] overflow-hidden touch-none"
-  >    <ResponsiveGallery 
-      items={artworks}
-      bend={3} 
-      textColor="#ffffff" 
-      borderRadius={0.05}
-      font="600 20px 'Newsreader Variable', 'Newsreader', serif"
-      client:load    />
+  <div className="overflow-visible">
+    <Masonry 
+      items={masonryItems}
+      ease="power3.out"
+      duration={0.6}
+      stagger={0.05}
+      animateFrom="bottom"
+      scaleOnHover={true}
+      hoverScale={0.97}
+      blurToFocus={true}
+      colorShiftOnHover={false}
+      client:only="react"
+    />
   </div>
 </section>
