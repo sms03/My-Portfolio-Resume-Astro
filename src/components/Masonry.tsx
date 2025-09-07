@@ -51,18 +51,7 @@ const useMeasure = <T extends HTMLElement>() => {
     return [ref, size] as const;
 };
 
-const preloadImages = async (urls: string[]): Promise<void> => {
-    await Promise.all(
-        urls.map(
-            src =>
-                new Promise<void>(resolve => {
-                    const img = new Image();
-                    img.src = src;
-                    img.onload = img.onerror = () => resolve();
-                })
-        )
-    );
-};
+// (Preloading removed for instant render)
 
 interface Item {
     id: string;
@@ -108,7 +97,7 @@ const Masonry: React.FC<MasonryProps> = ({
     );
 
     const [containerRef, { width }] = useMeasure<HTMLDivElement>();
-    const [imagesReady, setImagesReady] = useState(false);
+    const [imagesReady, setImagesReady] = useState(true); // always true for immediate render
     const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
     const [lightboxLoading, setLightboxLoading] = useState(false);
 
@@ -149,10 +138,7 @@ const Masonry: React.FC<MasonryProps> = ({
         }
     };
 
-    useEffect(() => {
-        if (typeof window === 'undefined') return;
-        preloadImages(items.map(i => i.img)).then(() => setImagesReady(true));
-    }, [items]);
+    // Removed image preloading + entrance animation for immediate layout
 
     const grid = useMemo<GridItem[]>(() => {
         if (!width) return [];
@@ -186,45 +172,14 @@ const Masonry: React.FC<MasonryProps> = ({
     const hasMounted = useRef(false);
 
     useLayoutEffect(() => {
-        if (typeof window === 'undefined' || !imagesReady) return;
-
-        grid.forEach((item, index) => {
+        if (typeof window === 'undefined') return;
+        // Instant positioning (no entrance animation)
+        grid.forEach(item => {
             const selector = `[data-key="${item.id}"]`;
-            const animProps = { x: item.x, y: item.y, width: item.w, height: item.h };
-
-            if (!hasMounted.current) {
-                const start = getInitialPosition(item);
-                gsap.fromTo(
-                    selector,
-                    {
-                        opacity: 0,
-                        x: start.x,
-                        y: start.y,
-                        width: item.w,
-                        height: item.h,
-                        ...(blurToFocus && { filter: 'blur(10px)' })
-                    },
-                    {
-                        opacity: 1,
-                        ...animProps,
-                        ...(blurToFocus && { filter: 'blur(0px)' }),
-                        duration: 0.8,
-                        ease: 'power3.out',
-                        delay: index * stagger
-                    }
-                );
-            } else {
-                gsap.to(selector, {
-                    ...animProps,
-                    duration,
-                    ease,
-                    overwrite: 'auto'
-                });
-            }
+            gsap.set(selector, { x: item.x, y: item.y, width: item.w, height: item.h, opacity: 1, clearProps: 'filter' });
         });
-
         hasMounted.current = true;
-    }, [grid, imagesReady, stagger, animateFrom, blurToFocus, duration, ease]);
+    }, [grid]);
 
     const handleMouseEnter = (id: string, element: HTMLElement) => {
         if (scaleOnHover) {
