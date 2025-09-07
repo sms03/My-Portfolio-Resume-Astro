@@ -224,12 +224,12 @@ const Masonry: React.FC<MasonryProps> = ({
                         <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-500 rounded-full animate-spin" />
                     </div>
                 )}
-        {grid.map(item => (
+                {grid.map(item => (
                     <div
                         key={item.id}
-            data-key={item.id}
-            className="absolute box-content select-none" /* cursor removed; no click action */
-            style={{ willChange: 'transform, width, height, opacity' }}
+                        data-key={item.id}
+                        className="absolute box-content select-none" /* cursor removed; no click action */
+                        style={{ willChange: 'transform, width, height, opacity' }}
                         onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget)}
                         onMouseLeave={e => handleMouseLeave(item.id, e.currentTarget)}
                     >
