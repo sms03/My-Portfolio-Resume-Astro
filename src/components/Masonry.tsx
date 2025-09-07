@@ -1,6 +1,5 @@
 import { gsap } from 'gsap';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 const useMedia = (queries: string[], values: number[], defaultValue: number): number => {
     const get = () => {
@@ -98,8 +97,7 @@ const Masonry: React.FC<MasonryProps> = ({
 
     const [containerRef, { width }] = useMeasure<HTMLDivElement>();
     const [imagesReady, setImagesReady] = useState(true); // always true for immediate render
-    const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
-    const [lightboxLoading, setLightboxLoading] = useState(false);
+    // Lightbox removed – clicks now do nothing
 
     const toSafeUrl = (src: string) => {
         try {
@@ -209,37 +207,7 @@ const Masonry: React.FC<MasonryProps> = ({
         }
     };
 
-    // Lightbox helpers
-    const openLightbox = (src: string) => {
-        setLightboxLoading(true);
-        setLightboxSrc(src);
-    };
-    const closeLightbox = () => setLightboxSrc(null);
-
-    useEffect(() => {
-        if (typeof document === 'undefined') return;
-        if (lightboxSrc) {
-            const prev = document.body.style.overflow;
-            document.body.style.overflow = 'hidden';
-            return () => {
-                document.body.style.overflow = prev;
-            };
-        }
-    }, [lightboxSrc]);
-
-    useEffect(() => {
-        if (!lightboxSrc) return;
-        // Preload the full image and only show once loaded
-        const img = new Image();
-        img.onload = () => setLightboxLoading(false);
-        img.onerror = () => setLightboxLoading(false);
-        img.src = toSafeUrl(lightboxSrc);
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') closeLightbox();
-        };
-        window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
-    }, [lightboxSrc]);
+    // (Lightbox logic removed)
 
     const effectiveHeight = containerHeight || 720; // Fallback so it's visible before measure
 
@@ -256,13 +224,12 @@ const Masonry: React.FC<MasonryProps> = ({
                         <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-500 rounded-full animate-spin" />
                     </div>
                 )}
-                {grid.map(item => (
+        {grid.map(item => (
                     <div
                         key={item.id}
-                        data-key={item.id}
-                        className="absolute box-content cursor-pointer"
-                        style={{ willChange: 'transform, width, height, opacity' }}
-                        onClick={() => openLightbox(item.img)}
+            data-key={item.id}
+            className="absolute box-content select-none" /* cursor removed; no click action */
+            style={{ willChange: 'transform, width, height, opacity' }}
                         onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget)}
                         onMouseLeave={e => handleMouseLeave(item.id, e.currentTarget)}
                     >
@@ -277,37 +244,6 @@ const Masonry: React.FC<MasonryProps> = ({
                     </div>
                 ))}
             </div>
-
-            {lightboxSrc && typeof document !== 'undefined' && createPortal(
-                <div
-                    className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-[1px] p-4 sm:p-6 flex items-center justify-center"
-                    onClick={(e) => {
-                        if (e.target === e.currentTarget) closeLightbox();
-                    }}
-                >
-                    <button
-                        aria-label="Close preview"
-                        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white text-2xl leading-none flex items-center justify-center"
-                        onClick={closeLightbox}
-                    >
-                        ×
-                    </button>
-                    <div className="relative w-full max-w-[1400px] h-[92vh]">
-                        {lightboxLoading && (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-10 h-10 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            </div>
-                        )}
-                        <img
-                            src={toSafeUrl(lightboxSrc)}
-                            alt="Preview"
-                            className={`w-full h-full object-contain rounded-md shadow-2xl select-none transition-opacity ${lightboxLoading ? 'opacity-0' : 'opacity-100'}`}
-                            draggable={false}
-                        />
-                    </div>
-                </div>,
-                document.body
-            )}
         </>
     );
 };
