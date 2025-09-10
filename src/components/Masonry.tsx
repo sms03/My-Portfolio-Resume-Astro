@@ -54,9 +54,11 @@ const useMeasure = <T extends HTMLElement>() => {
 
 interface Item {
     id: string;
-    img: string;
+    img: string; // image URL or poster for video
     url: string;
     height: number;
+    video?: string; // optional mp4 URL
+    poster?: string; // optional poster for video
 }
 
 interface GridItem extends Item {
@@ -207,7 +209,31 @@ const Masonry: React.FC<MasonryProps> = ({
         }
     };
 
-    // (Lightbox logic removed)
+    // Autoplay/pause videos on visibility
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const container = containerRef.current;
+        if (!container) return;
+        const videos = Array.from(container.querySelectorAll<HTMLVideoElement>('video[data-masonry-video]'));
+        if (!videos.length) return;
+        const io = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    const vid = entry.target as HTMLVideoElement;
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.25) {
+                        // attempt play
+                        const p = vid.play();
+                        if (p && typeof p.catch === 'function') p.catch(() => { });
+                    } else {
+                        vid.pause();
+                    }
+                });
+            },
+            { threshold: [0, 0.25, 0.5, 0.75, 1] }
+        );
+        videos.forEach(v => io.observe(v));
+        return () => io.disconnect();
+    }, [grid, items]);
 
     const effectiveHeight = containerHeight || 720; // Fallback so it's visible before measure
 
@@ -233,14 +259,27 @@ const Masonry: React.FC<MasonryProps> = ({
                         onMouseEnter={e => handleMouseEnter(item.id, e.currentTarget)}
                         onMouseLeave={e => handleMouseLeave(item.id, e.currentTarget)}
                     >
-                        <div
-                            className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] uppercase text-[10px] leading-[10px]"
-                            style={{ backgroundImage: `url("${toSafeUrl(item.img)}")` }}
-                        >
-                            {colorShiftOnHover && (
-                                <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
-                            )}
-                        </div>
+                        {item.video ? (
+                            <video
+                                className="relative w-full h-full object-cover rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] bg-black"
+                                data-masonry-video
+                                src={toSafeUrl(item.video)}
+                                poster={item.poster ? toSafeUrl(item.poster) : toSafeUrl(item.img)}
+                                muted
+                                playsInline
+                                loop
+                                preload="metadata"
+                            />
+                        ) : (
+                            <div
+                                className="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] uppercase text-[10px] leading-[10px]"
+                                style={{ backgroundImage: `url("${toSafeUrl(item.img)}")` }}
+                            >
+                                {colorShiftOnHover && (
+                                    <div className="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none" />
+                                )}
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>
